@@ -112,15 +112,50 @@ module sck_clk_devider
 (
     input       clk,
     input       rst_n,
-    output      sck,
-    output      sck_edge
+    output  reg sck,
+    output  reg sck_edge
 );
-    wire [3:0] cnt;
-    wire [3:0] cntNext = cnt + 1;
-    register #(.SIZE(4)) r_cnt(clk, rst_n, cntNext, cnt);
+    localparam  S_DOWN = 0,
+                S_EDGE = 1,
+                S_UP   = 2;
 
-    assign sck = cnt[3];
-    assign sck_edge = (cnt == 4'b1000);
+    localparam  DOWN_SIZE = 7,
+                EP_SIZE = DOWN_SIZE - 1; // because 1 cycle of S_EDGE;
+
+    // State hold registers
+    wire [1:0] State;
+    reg  [1:0] Next;
+    register #(.SIZE(2)) r_state(clk, rst_n, Next, State);
+
+    wire [2:0] cnt;
+    reg  [2:0] cntNext;
+    register #(.SIZE(3)) r_cnt(clk, rst_n, cntNext, cnt);
+
+    // Next state determining
+    always @(*) begin
+        Next = State;
+        case(State)
+            S_DOWN  : if(cnt == DOWN_SIZE) Next = S_EDGE;
+            S_EDGE  : Next = S_UP;
+            S_UP    : if(cnt == EP_SIZE) Next = S_DOWN;
+        endcase
+    end
+
+    always @(*) begin
+        case(State)
+            S_DOWN  : cntNext = (cnt == DOWN_SIZE) ? 0 : cnt + 1;
+            S_EDGE  : cntNext = 0;
+            S_UP    : cntNext = (cnt == EP_SIZE) ? 0 : cnt + 1;
+        endcase
+    end
+
+    // Output value
+    always @(*) begin
+        case(State)
+            S_DOWN  : begin sck = 0; sck_edge = 0; end
+            S_EDGE  : begin sck = 1; sck_edge = 1; end
+            S_UP    : begin sck = 1; sck_edge = 0; end
+        endcase
+    end
 
 endmodule
-
