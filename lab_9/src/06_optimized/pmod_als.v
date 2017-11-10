@@ -22,10 +22,10 @@ module pmod_als
     wire [ CNTSIZE - 1:0] cntNext = cnt + 1;
     register #(.SIZE(CNTSIZE)) r_counter(clk, rst_n, cntNext, cnt);
 
-    assign sck = ~ cnt [3];
-    assign cs  = ~ (cnt [8] && cnt[CNTSIZE - 1:9] == { (CNTSIZE - 10) { 1'b0 } });
+    assign sck = cnt [3];
+    assign cs  = ~(cnt[CNTSIZE - 1:8] == { {(CNTSIZE - 9) { 1'b0 }}, 1'b1 });
 
-    wire sampleBit = ( cs == 1'b0 && cnt [3:0] == 4'b1111 );
+    wire sampleBit = ( cs == 1'b0 && cnt [3:0] == 4'b1000 );
     wire valueDone = ( cs == 1'b1 && cnt [7:0] == 8'b0 );
 
     wire [15:0] shift;
