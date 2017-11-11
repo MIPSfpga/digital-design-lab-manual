@@ -27,7 +27,7 @@ module pmod_als
     localparam  IDLE_SIZE    = QUERY_DELAY,
                 PREFIX_SIZE  = 2,
                 DATA_SIZE    = 7,
-                POSTFIX_SIZE = 6;
+                POSTFIX_SIZE = 4;
 
     // sck clock devider
     wire sck_edge;
