@@ -261,5 +261,6 @@ set_location_assignment PIN_AA2 -to GPIO[35]
 # project files
 set_global_assignment -name VERILOG_FILE ../de10_lite.v
 
-set_global_assignment -name VERILOG_FILE ../../hex_display.v
+set_global_assignment -name VERILOG_FILE ../../../common/synthesis/hex_display.v
+
 set_global_assignment -name VERILOG_FILE ../../pmod_als.v

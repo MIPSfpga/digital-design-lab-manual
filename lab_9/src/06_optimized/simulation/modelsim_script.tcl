@@ -3,7 +3,7 @@
 vlib work
 
 # compile all the Verilog sources
-vlog  ../*.v ../../*.v 
+vlog  ../../*.v ../../../common/simulation/*.v
 
 # open the testbench module for simulation
 vsim work.testbench

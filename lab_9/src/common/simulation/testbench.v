@@ -70,4 +70,7 @@ module testbench;
     initial 
         $monitor("value=%h", value);
 
+    initial 
+        $dumpvars;
+
 endmodule
