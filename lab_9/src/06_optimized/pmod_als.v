@@ -23,16 +23,16 @@ module pmod_als
     register #(.SIZE(CNTSIZE)) r_counter(clk, rst_n, cntNext, cnt);
 
     assign sck = cnt [3];
-    assign cs  = ~(cnt[CNTSIZE - 1:8] == { {(CNTSIZE - 9) { 1'b0 }}, 1'b1 });
+    assign cs  = ~(cnt[CNTSIZE - 1:8] == { (CNTSIZE - 8) { 1'b1 }});
 
-    wire sampleBit = ( cs == 1'b0 && cnt [3:0] == 4'b1000 );
-    wire valueDone = ( cs == 1'b1 && cnt [7:0] == 8'b0 );
+    wire sampleBit = ( cs == 1'b0 && cnt [3:0] == 4'b1000     );
+    wire valueDone = ( cs == 1'b0 && cnt [7:0] == 8'b10101001 );
 
-    wire [15:0] shift;
-    wire [15:0] shiftNext = (shift << 1) | sdo;
-    register_we #(.SIZE(16)) r_shift(clk, rst_n, sampleBit, shiftNext, shift);
+    wire [7:0] shift;
+    wire [7:0] shiftNext = (shift << 1) | sdo;
+    register_we #(.SIZE(8)) r_shift(clk, rst_n, sampleBit, shiftNext, shift);
 
-    wire [7:0] valueNext = shift[12:5];
+    wire [7:0] valueNext = shift;
     register_we #(.SIZE(8))  r_value(clk, rst_n, valueDone, valueNext, value);
 
 endmodule

@@ -47,7 +47,7 @@ module de10_lite
 
     //sensor
     pmod_als 
-        #( .CNTSIZE(23) )
+        #( .CNTSIZE(24) )
     als
     (
         .clk    ( clk   ),
