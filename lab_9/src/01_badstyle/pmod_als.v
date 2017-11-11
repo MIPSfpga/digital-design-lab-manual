@@ -103,7 +103,7 @@ module sck_clk_devider
                 S_UP   = 2;
 
     localparam  DOWN_SIZE = 7,
-                EP_SIZE = DOWN_SIZE - 1; // because 1 cycle of S_EDGE;
+                UP_SIZE = DOWN_SIZE - 1; // because 1 cycle of S_EDGE;
 
     // State hold registers
     reg  [1:0] State;
@@ -126,8 +126,8 @@ module sck_clk_devider
                             cnt <= 0;
                          end
                 S_UP   : begin 
-                            if(cnt == EP_SIZE) State <= S_DOWN;
-                            cnt <= (cnt == EP_SIZE) ? 0 : cnt + 1;
+                            if(cnt == UP_SIZE) State <= S_DOWN;
+                            cnt <= (cnt == UP_SIZE) ? 0 : cnt + 1;
                          end
             endcase
         end

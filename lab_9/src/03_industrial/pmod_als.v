@@ -114,7 +114,7 @@ module sck_clk_devider
                 S_UP   = 2;
 
     localparam  DOWN_SIZE = 7,
-                EP_SIZE = DOWN_SIZE - 1; // because 1 cycle of S_EDGE;
+                UP_SIZE = DOWN_SIZE - 1; // because 1 cycle of S_EDGE;
 
     // State hold registers
     wire [1:0] State;
@@ -131,7 +131,7 @@ module sck_clk_devider
         case(State)
             S_DOWN  : if(cnt == DOWN_SIZE) Next = S_EDGE;
             S_EDGE  : Next = S_UP;
-            S_UP    : if(cnt == EP_SIZE) Next = S_DOWN;
+            S_UP    : if(cnt == UP_SIZE) Next = S_DOWN;
         endcase
     end
 
@@ -139,7 +139,7 @@ module sck_clk_devider
         case(State)
             S_DOWN  : cntNext = (cnt == DOWN_SIZE) ? 0 : cnt + 1;
             S_EDGE  : cntNext = 0;
-            S_UP    : cntNext = (cnt == EP_SIZE) ? 0 : cnt + 1;
+            S_UP    : cntNext = (cnt == UP_SIZE) ? 0 : cnt + 1;
         endcase
     end
 
