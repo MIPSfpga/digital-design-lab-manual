@@ -29,9 +29,9 @@ module pmod_als
                 DATA_SIZE    = 7,
                 POSTFIX_SIZE = 4;
 
-    // sck clock devider
+    // sck clock divider
     wire sck_edge;
-    sck_clk_devider scd
+    sck_clk_divider scd
     (
         .clk        ( clk      ),
         .rst_n      ( rst_n    ),
@@ -92,7 +92,7 @@ module pmod_als
 endmodule
 
 
-module sck_clk_devider
+module sck_clk_divider
 (
     input       clk,
     input       rst_n,
