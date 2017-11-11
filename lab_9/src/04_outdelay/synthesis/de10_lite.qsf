@@ -264,3 +264,4 @@ set_global_assignment -name VERILOG_FILE ../de10_lite.v
 set_global_assignment -name VERILOG_FILE ../../hex_display.v
 set_global_assignment -name VERILOG_FILE ../../pmod_als.v
 set_global_assignment -name VERILOG_FILE ../../register.v
+set_global_assignment -name VERILOG_FILE ../../register_we.v
