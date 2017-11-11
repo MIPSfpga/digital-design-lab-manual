@@ -13,8 +13,8 @@ module pmod_als
 (
     input             clk,
     input             rst_n,
-    output reg        cs,
-    output reg        sck,
+    output            cs,
+    output            sck,
     input             sdo,
     output reg  [7:0] value
 );
@@ -31,24 +31,26 @@ module pmod_als
 
     // sck clock devider
     wire sck_edge;
-    wire sck_out;
     sck_clk_devider scd
     (
         .clk        ( clk      ),
         .rst_n      ( rst_n    ),
-        .sck        ( sck_out  ),
+        .sck        ( sck      ),
         .sck_edge   ( sck_edge )
     );
 
     // State hold registers
     reg  [ 1:0] State;
-    reg  [ 1:0] Next;
     reg  [23:0] cnt;
-    reg  [23:0] cntNext;
     reg  [ 7:0] buffer;
+
+    // State hold registers next value
+    reg  [ 1:0] Next;
+    reg  [23:0] cntNext;
     reg  [ 7:0] bufferNext;
     reg  [ 7:0] valueNext;
 
+    // Next value to state on every clock
     always @ (posedge clk or negedge rst_n)
         if(~rst_n) begin
             State  <= S_IDLE;
@@ -77,13 +79,15 @@ module pmod_als
 
     always @(*) begin
         cntNext = cnt;
-        if(sck_edge)
+        if(sck_edge) begin
+            cntNext = cnt + 1;
             case(State)
-                S_IDLE    : cntNext = (cnt == IDLE_SIZE)    ? 0 : cnt + 1;
-                S_PREFIX  : cntNext = (cnt == PREFIX_SIZE)  ? 0 : cnt + 1;
-                S_DATA    : cntNext = (cnt == DATA_SIZE)    ? 0 : cnt + 1;
-                S_POSTFIX : cntNext = (cnt == POSTFIX_SIZE) ? 0 : cnt + 1;
+                S_IDLE    : if (cnt == IDLE_SIZE)    cntNext = 0;
+                S_PREFIX  : if (cnt == PREFIX_SIZE)  cntNext = 0;
+                S_DATA    : if (cnt == DATA_SIZE)    cntNext = 0;
+                S_POSTFIX : if (cnt == POSTFIX_SIZE) cntNext = 0;
             endcase
+        end
     end
 
     always @(*) begin
@@ -97,14 +101,7 @@ module pmod_als
     end
 
     // output
-    always @(*) begin
-        case(State)
-            S_IDLE    : begin cs = 1'b1; sck = 1'b0;    end
-            S_PREFIX  : begin cs = 1'b0; sck = sck_out; end
-            S_DATA    : begin cs = 1'b0; sck = sck_out; end
-            S_POSTFIX : begin cs = 1'b0; sck = sck_out; end
-        endcase
-    end
+    assign cs = (State == S_IDLE);
 
 endmodule
 
@@ -113,8 +110,8 @@ module sck_clk_devider
 (
     input       clk,
     input       rst_n,
-    output  reg sck,
-    output  reg sck_edge
+    output      sck,
+    output      sck_edge
 );
     localparam  S_DOWN = 0,
                 S_EDGE = 1,
@@ -125,8 +122,10 @@ module sck_clk_devider
 
     // State hold registers
     reg  [1:0] State;
-    reg  [1:0] Next;
     reg  [2:0] cnt;
+
+    // State hold registers next value
+    reg  [1:0] Next;
     reg  [2:0] cntNext;
 
     always @ (posedge clk or negedge rst_n)
@@ -150,21 +149,16 @@ module sck_clk_devider
     end
 
     always @(*) begin
+        cntNext = cnt + 1;
         case(State)
-            S_DOWN  : cntNext = (cnt == DOWN_SIZE) ? 0 : cnt + 1;
+            S_DOWN  : if (cnt == DOWN_SIZE) cntNext = 0;
             S_EDGE  : cntNext = 0;
-            S_UP    : cntNext = (cnt == UP_SIZE) ? 0 : cnt + 1;
+            S_UP    : if (cnt == UP_SIZE) cntNext = 0;
         endcase
     end
 
     // Output value
-    always @(*) begin
-        case(State)
-            S_DOWN  : begin sck = 0; sck_edge = 0; end
-            S_EDGE  : begin sck = 1; sck_edge = 1; end
-            S_UP    : begin sck = 1; sck_edge = 0; end
-        endcase
-    end
+    assign sck      = (State != S_DOWN);
+    assign sck_edge = (State == S_EDGE);
 
 endmodule
-

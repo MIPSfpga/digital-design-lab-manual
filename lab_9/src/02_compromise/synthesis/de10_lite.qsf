@@ -6,7 +6,7 @@ set_global_assignment -name FAMILY "MAX 10 FPGA"
 set_global_assignment -name DEVICE 10M50DAF484C7G
 set_global_assignment -name TOP_LEVEL_ENTITY "de10_lite"
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "16.0.0"
-set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.0.0 Lite Edition"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "22:47:39 JUNE 26,2017"
 set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
