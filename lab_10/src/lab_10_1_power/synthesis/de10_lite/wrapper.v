@@ -19,8 +19,8 @@ module wrapper
     inout  [35:0] GPIO
 );
 
-    wire clk   = MAX10_CLK1_50;
-    wire rst_n = SW [9];
+    wire clk   =   MAX10_CLK1_50;
+    wire rst_n = ~ SW [9];
 
     wire clk_en;
 

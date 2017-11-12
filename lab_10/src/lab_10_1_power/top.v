@@ -20,7 +20,7 @@ module pow_5_single_cycle
     reg_no_rst_en # (8) i_n       (clk, clk_en, n, n_q);
 
     wire           res_vld_d = n_vld_q;
-    wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
+    wire [w - 1:0] res_d     = n_q * n_q * n_q * n_q * n_q;
 
     reg_rst_n_en        i_res_vld (clk, rst_n, clk_en, res_vld_d, res_vld);
     reg_no_rst_en # (8) i_res     (clk, clk_en, res_d, res);
@@ -173,19 +173,19 @@ module pow_5_multiple_cycles_alternative_style
 endmodule
 
 //--------------------------------------------------------------------
-/*
+
 module pow_5_pipelined
 # (
     parameter w = 8
 )
 (
-    input            clk,
-    input            rst_n,
-    input            clk_en,
-    input            n_vld,
-    input  [w - 1:0] n,
-    output           res_vld,
-    output [w - 1:0] res
+    input                clk,
+    input                rst_n,
+    input                clk_en,
+    input                n_vld,
+    input  [w - 1:0]     n,
+    output [3:0]         res_vld,
+    output [w * 4 - 1:0] res
 );
 
     wire           n_vld_q_1;
@@ -194,9 +194,11 @@ module pow_5_pipelined
     reg_rst_n_en        i0_n_vld   (clk, rst_n, clk_en, n_vld, n_vld_q_1);
     reg_no_rst_en # (8) i0_n       (clk, clk_en, n, n_q_1);
 
+    //------------------------------------------------------------------------
+
     wire [w - 1:0] mul_d_1 = n_q_1 * n_q_1;
 
-    wire           n_vld_q_1;
+    wire           n_vld_q_2;
     wire [w - 1:0] n_q_2;
     wire [w - 1:0] mul_q_2;
 
@@ -204,22 +206,113 @@ module pow_5_pipelined
     reg_no_rst_en # (8) i1_n     ( clk ,          clk_en , n_q_1     , n_q_2     );
     reg_no_rst_en # (8) i1_mul   ( clk ,          clk_en , mul_d_1   , mul_q_2   );
 
-    assign res_vld [0]   = n_vld_q_2;
-    assign res     [7:0] = n_q_2;
+    assign res_vld [3]   = n_vld_q_2;
+    assign res     [31:24] = mul_q_2;
+    
+    //------------------------------------------------------------------------
 
+    wire [w - 1:0] mul_d_2 = mul_q_2 * n_q_2;
 
+    wire           n_vld_q_3;
+    wire [w - 1:0] n_q_3;
+    wire [w - 1:0] mul_q_3;
 
+    reg_rst_n_en        i2_n_vld ( clk , rst_n  , clk_en , n_vld_q_2 , n_vld_q_3 );
+    reg_no_rst_en # (8) i2_n     ( clk ,          clk_en , n_q_2     , n_q_3     );
+    reg_no_rst_en # (8) i2_mul   ( clk ,          clk_en , mul_d_2   , mul_q_3   );
 
+    assign res_vld [2]     = n_vld_q_3;
+    assign res     [23:16] = mul_q_3;
 
+    //------------------------------------------------------------------------
 
-    wire           res_vld_d = n_vld_q;
-    wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
+    wire [w - 1:0] mul_d_3 = mul_q_3 * n_q_3;
 
-    reg_rst_n_en        i_res_vld (clk, rst_n, clk_en, res_vld_d, res_vld);
-    reg_no_rst_en # (8) i_res     (clk, clk_en, res_d, res);
+    wire           n_vld_q_4;
+    wire [w - 1:0] n_q_4;
+    wire [w - 1:0] mul_q_4;
+
+    reg_rst_n_en        i3_n_vld ( clk , rst_n  , clk_en , n_vld_q_3 , n_vld_q_4 );
+    reg_no_rst_en # (8) i3_n     ( clk ,          clk_en , n_q_3     , n_q_4     );
+    reg_no_rst_en # (8) i3_mul   ( clk ,          clk_en , mul_d_3   , mul_q_4   );
+
+    assign res_vld [1]    = n_vld_q_4;
+    assign res     [15:8] = mul_q_4;
+
+    //------------------------------------------------------------------------
+
+    wire [w - 1:0] mul_d_4 = mul_q_4 * n_q_4;
+
+    wire           n_vld_q_5;
+    wire [w - 1:0] n_q_5;
+    wire [w - 1:0] mul_q_5;
+
+    reg_rst_n_en        i4_n_vld ( clk , rst_n  , clk_en , n_vld_q_4 , n_vld_q_5 );
+    reg_no_rst_en # (8) i4_n     ( clk ,          clk_en , n_q_4     , n_q_5     );
+    reg_no_rst_en # (8) i4_mul   ( clk ,          clk_en , mul_d_4   , mul_q_5   );
+
+    assign res_vld [0]   = n_vld_q_5;
+    assign res     [7:0] = mul_q_5;
 
 endmodule
-*/
+
+//--------------------------------------------------------------------
+
+module pow_5_pipelined_alternative_style
+# (
+    parameter w = 8
+)
+(
+    input                clk,
+    input                rst_n,
+    input                clk_en,
+    input                n_vld,
+    input  [w - 1:0]     n,
+    output [3:0]         res_vld,
+    output [w * 4 - 1:0] res
+);
+
+    reg [w - 1:0] n1, n2, n3, n4;
+    reg [w - 1:0] pow2, pow3, pow4, pow5;
+    reg n_vld_1, n_vld_2, n_vld_3, n_vld_4, n_vld_5;
+
+    always @ (posedge clk or negedge rst_n)
+        if (! rst_n)
+        begin
+            n_vld_1 <= 1'b0;
+            n_vld_2 <= 1'b0;
+            n_vld_3 <= 1'b0;
+            n_vld_4 <= 1'b0;
+            n_vld_5 <= 1'b0;
+        end
+        else if (clk_en)
+        begin
+            n_vld_1 <= n_vld;
+            n_vld_2 <= n_vld_1;
+            n_vld_3 <= n_vld_2;
+            n_vld_4 <= n_vld_3;
+            n_vld_5 <= n_vld_4;
+        end
+
+    always @ (posedge clk)
+        if (clk_en)
+        begin
+            n1 <= n;
+            n2 <= n1;
+            n3 <= n2;
+            n4 <= n3;
+
+            pow2 <= n1 * n1;
+            pow3 <= pow2 * n2;
+            pow4 <= pow3 * n3;
+            pow5 <= pow4 * n4;
+        end
+
+    assign res_vld = { n_vld_2 , n_vld_3 , n_vld_4 , n_vld_5 };
+    assign res     = { pow2    , pow3    , pow4    , pow5    };
+
+endmodule
+
 //--------------------------------------------------------------------
 
 module top
@@ -235,10 +328,11 @@ module top
     output [ 7:0] disp_dot
 );
 
-    assign led  = { 7'b0, clk_en };
-
+/*
     wire res_vld;
     
+    assign led  = { 8 { res_vld } };
+
     // pow_5_single_cycle
     // pow_5_single_cycle_alternative_style
     // pow_5_multiple_cycles
@@ -265,20 +359,32 @@ module top
 
     */
 
-    pow_5_pipelined
+    wire [3:0] res_vld;
+
+    // pow_5_pipelined
+    // pow_5_pipelined_alternative_style
+
+    pow_5_pipelined_alternative_style
     # (.w (8))
     i_pow_5
     (
-        .clk     ( clk        ),
-        .rst_n   ( rst_n      ),
-        .clk_en  ( clk_en     ),
-        .n_vld   ( key [0]    ),
-        .n       ( sw         ),
-        .res_vld ( res_vld    ),
-        .res     ( disp [7:0] )
+        .clk     ( clk         ),
+        .rst_n   ( rst_n       ),
+        .clk_en  ( clk_en      ),
+        .n_vld   ( key [0]     ),
+        .n       ( sw          ),
+        .res_vld ( res_vld     ),
+        .res     ( disp [31:0] )
     );
-    
-    assign disp_en  = 8'b00000011;
-    assign disp_dot = { 7'b0000000, res_vld };
+
+    assign disp_en  =
+    {
+        res_vld [3], res_vld [3],
+        res_vld [2], res_vld [2],
+        res_vld [1], res_vld [1],
+        res_vld [0], res_vld [0]
+    };
+
+    assign disp_dot = 8'b0;
 
 endmodule
