@@ -6,6 +6,7 @@ module pow_5_single_cycle
 (
     input            clk,
     input            rst_n,
+    input            clk_en,
     input            n_vld,
     input  [w - 1:0] n,
     output           res_vld,
@@ -16,15 +17,15 @@ module pow_5_single_cycle
     wire   [w - 1:0] n_q;
     wire             res_vld_d;
     wire   [w - 1:0] res_d;
-    
-    reg_rst_0        (clk, rst_n, n_vld, n_vld_q);
-    reg_no_rst # (8) (clk, n, n_q);
 
-    assign res_vld_d  = n_vld_q;
-    assign res_d      = n * n * n * n * n;
+    reg_rst_n_en        i_n_vld   (clk, rst_n, clk_en, n_vld, n_vld_q);
+    reg_no_rst_en # (8) i_n       (clk, rst_n, n, n_q);
 
-    reg_rst_0        (clk, rst_n, res_vld_d, res_vld);
-    reg_no_rst # (8) (clk, res_d, res);
+    assign res_vld_d = n_vld_q;
+    assign res_d     = n_q  * n_q * n_q * n_q * n_q;
+
+    reg_rst_n_en        i_res_vld (clk, rst_n, clk_en, res_vld_d, res_vld);
+    reg_no_rst_en # (8) i_res     (clk, clk_en, res_d, res);
 
 endmodule
 
@@ -247,6 +248,7 @@ module top
 (
     input         clk,
     input         rst_n,
+    input         clk_en,
     input  [ 3:0] key,
     input  [ 7:0] sw,
     output [ 7:0] led,
@@ -256,19 +258,21 @@ module top
 );
 
     assign led  = sw;
-    assign disp = { sw, sw, sw, key, key };    
 
+    wire res_vld;
+    
     pow_5_single_cycle # (.w (8)) i_pow_5
     (
-        .clk     ( clk          ),
-        .rst_n   ( rst_n        ),
-        .n_vld   ( key [0]      ),
-        .n       ( sw           ),
-        .res_vld ( disp_dot [0] ),
-        .res     ( disp [7:0]   )
+        .clk     ( clk        ),
+        .rst_n   ( rst_n      ),
+        .clk_en  ( clk_en     ),
+        .n_vld   ( key [0]    ),
+        .n       ( sw         ),
+        .res_vld ( res_vld    ),
+        .res     ( disp [7:0] )
     );
     
-    assign disp_en        = 8'b00000011;
-    assign disp_dot [7:1] = 7'b0000000;
+    assign disp_en  = 8'b00000011;
+    assign disp_dot = { 7'b0000000, res_vld };
 
 endmodule

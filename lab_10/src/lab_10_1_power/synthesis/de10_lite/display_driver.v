@@ -1,9 +1,9 @@
 module display_driver
 (
-    input            en,
-    input      [3:0] dig,
-    input            dot,
-    output reg [7:0] _gfedcba
+    input        en,
+    input  [3:0] dig,
+    input        dot,
+    output [7:0] _gfedcba
 );
 
     // . g f e d c b a   // Letter from the diagram below
@@ -44,6 +44,6 @@ module display_driver
             4'hf: gfedcba = 7'b0001110;
             endcase
 
-    assign _gfedcba = { dot, gfedcba };
+    assign _gfedcba = { ~ dot, gfedcba };
 
 endmodule

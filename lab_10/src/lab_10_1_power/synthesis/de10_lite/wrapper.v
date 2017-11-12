@@ -19,21 +19,34 @@ module wrapper
     inout  [35:0] GPIO
 );
 
+    wire clk   = MAX10_CLK1_50;
+    wire rst_n = SW [9];
+
+    wire clk_en;
+
+    strobe_generator # (.w (22)) i_strobe_generator
+    (
+        .clk    ( clk    ),
+        .rst_n  ( rst_n  ),
+        .strobe ( clk_en )
+    );
+
     wire   [ 7:0] disp_en;
     wire   [31:0] disp;
     wire   [ 7:0] disp_dot;
 
     top i_top
     (
-        .clk      ( MAX10_CLK1_50             ),
-        .rst_n    ( SW [9]                    ),
+        .clk      ( clk                         ),
+        .rst_n    ( rst_n                       ),
+        .clk_en   ( clk_en                      ),
 
-        .key      ( { 2'b0, KEY      [ 1:0] } ),
-        .sw       (         SW       [ 7:0]   ),
-        .led      (         LEDR     [ 7:0]   ),
-        .disp_en  (         disp_en  [ 7:0]   ),
-        .disp     (         disp     [31:0]   ),
-        .disp_dot (         disp_dot [ 7:0]   )
+        .key      ( { 2'b0, ~ KEY      [ 1:0] } ),
+        .sw       (           SW       [ 7:0]   ),
+        .led      (           LEDR     [ 7:0]   ),
+        .disp_en  (           disp_en  [ 7:0]   ),
+        .disp     (           disp     [31:0]   ),
+        .disp_dot (           disp_dot [ 7:0]   )
     );
 
     wire unused =   ADC_CLK_10
