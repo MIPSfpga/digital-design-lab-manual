@@ -24,16 +24,7 @@ module wrapper
 
     wire clk_en;
 
-    strobe_generator # (.w (23)) i_strobe_generator
-    (
-        .clk    ( clk    ),
-        .rst_n  ( rst_n  ),
-        .strobe ( clk_en )
-    );
-
-    wire clk_en;
-
-    strobe_generator # (.w (23)) i_strobe_generator
+    strobe_generator # (.w (24)) i_strobe_generator
     (
         .clk    ( clk    ),
         .rst_n  ( rst_n  ),

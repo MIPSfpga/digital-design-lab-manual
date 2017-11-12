@@ -17,7 +17,7 @@ module pow_5_single_cycle
     wire [w - 1:0] n_q;
 
     reg_rst_n_en        i_n_vld   (clk, rst_n, clk_en, n_vld, n_vld_q);
-    reg_no_rst_en # (8) i_n       (clk, rst_n, n, n_q);
+    reg_no_rst_en # (8) i_n       (clk, clk_en, n, n_q);
 
     wire           res_vld_d = n_vld_q;
     wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
@@ -87,6 +87,46 @@ module pow_5_multiple_cycles
     output [w - 1:0] res
 );
 
+    wire           n_vld_q;
+    wire [w - 1:0] n_q;
+
+    reg_rst_n_en        i_n_vld (clk, rst_n, clk_en, n_vld, n_vld_q);
+    reg_no_rst_en # (8) i_n     (clk, clk_en, n, n_q);
+
+    wire [4:0] shift_d = n_vld_q ? 5'b10000 : shift_q >> 1;
+    wire [4:0] shift_q;
+   
+    reg_rst_n_en # (5) i_shift (clk, rst_n, clk_en, shift_d, shift_q);
+    
+    assign res_vld = shift_q [0];
+
+    wire [w - 1:0] mul_d = n_vld_q ? n_q : mul_q * n_q;
+    wire [w - 1:0] mul_q;
+
+    wire mul_en = clk_en;  // && (n_vld_q || shift_q [4:1] != 4'b0);
+
+    reg_no_rst_en # (8) i_mul (clk, mul_en, mul_d, mul_q);
+    
+    assign res = mul_q;
+
+endmodule
+
+//----------------------------------------------------------------------------
+
+module pow_5_multiple_cycles_alternative_style
+# (
+    parameter w = 8
+)
+(
+    input            clk,
+    input            rst_n,
+    input            clk_en,
+    input            n_vld,
+    input  [w - 1:0] n,
+    output           res_vld,
+    output [w - 1:0] res
+);
+
     reg           n_vld_q;
     reg [w - 1:0] n_q;
 
@@ -135,164 +175,52 @@ endmodule
 //--------------------------------------------------------------------
 /*
 module pow_5_pipelined
+# (
+    parameter w = 8
+)
 (
-    input            clock,
-    input      [7:0] n,
-    output reg [7:0] n_pow_5
+    input            clk,
+    input            rst_n,
+    input            clk_en,
+    input            n_vld,
+    input  [w - 1:0] n,
+    output           res_vld,
+    output [w - 1:0] res
 );
 
-    reg [7:0] n_1, n_2, n_3;
-    reg [7:0] n_pow_2, n_pow_3, n_pow_4;
+    wire           n_vld_q_1;
+    wire [w - 1:0] n_q_1;
 
-    always @(posedge clock)
-    begin
-        n_1 <= n;
-        n_2 <= n_1;
-        n_3 <= n_2;
+    reg_rst_n_en        i0_n_vld   (clk, rst_n, clk_en, n_vld, n_vld_q_1);
+    reg_no_rst_en # (8) i0_n       (clk, clk_en, n, n_q_1);
 
-        n_pow_2 <= n * n;
-        n_pow_3 <= n_pow_2 * n_1;
-        n_pow_4 <= n_pow_3 * n_2;
-        n_pow_5 <= n_pow_4 * n_3;
-    end
+    wire [w - 1:0] mul_d_1 = n_q_1 * n_q_1;
 
-endmodule
+    wire           n_vld_q_1;
+    wire [w - 1:0] n_q_2;
+    wire [w - 1:0] mul_q_2;
 
-//--------------------------------------------------------------------
+    reg_rst_n_en        i1_n_vld ( clk , rst_n  , clk_en , n_vld_q_1 , n_vld_q_2 );
+    reg_no_rst_en # (8) i1_n     ( clk ,          clk_en , n_q_1     , n_q_2     );
+    reg_no_rst_en # (8) i1_mul   ( clk ,          clk_en , mul_d_1   , mul_q_2   );
 
-module clock_divider_50_MHz_to_1_49_Hz
-(
-    input  clock_50_MHz,
-    input  reset_n,
-    output clock_1_49_Hz
-);
+    assign res_vld [0]   = n_vld_q_2;
+    assign res     [7:0] = n_q_2;
 
-    // 50 MHz / 2 ** 25 = 1.49 Hz
 
-    reg [24:0] counter;
 
-    always @ (posedge clock_50_MHz or negedge reset_n)
-    begin
-        if (! reset_n)
-            counter <= 0;
-        else
-            counter <= counter + 1;
-    end
 
-    assign clock_1_49_Hz = counter [24];
 
-endmodule
 
-//--------------------------------------------------------------------
+    wire           res_vld_d = n_vld_q;
+    wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
 
-/*
-module de2_115_user
-(
-    input         CLOCK_50,
-    input  [ 3:0] KEY,
-    input  [17:0] SW,
-    output [ 8:0] LEDG,
-    output [17:0] LEDR,
-    output [ 6:0] HEX0,
-    output [ 6:0] HEX1,
-    output [ 6:0] HEX2,
-    output [ 6:0] HEX3,
-    output [ 6:0] HEX4,
-    output [ 6:0] HEX5,
-    output [ 6:0] HEX6,
-    output [ 6:0] HEX7
-);
-
-    wire clock;
-
-    wire reset_n                  =   KEY [3];
-
-    wire        combinational     = ! KEY [2];
-    wire        run_sequential    = ! KEY [1];
-    wire        ready_sequential;
-    wire        pipelined         = ! KEY [0];
-
-    wire [15:0] n                 =   SW [15:0];
-
-    wire [15:0] n_pow_5_combinational;
-    wire [15:0] n_pow_5_pipelined;
-    wire [15:0] n_pow_5_sequential;
-
-    wire [15:0] n_pow_5  =   combinational ? n_pow_5_combinational
-                           : pipelined     ? n_pow_5_pipelined
-                           :                 n_pow_5_sequential;
-
-    clock_divider_50_MHz_to_1_49_Hz clock_divider_50_MHz_to_1_49_Hz
-    (
-        .clock_50_MHz  (CLOCK_50),
-        .reset_n       (reset_n),
-        .clock_1_49_Hz (clock)
-    );
-
-    assign LEDR = n_pow_5;
-
-    assign LEDG [8:7] = { 2 { ready_sequential } };
-    assign LEDG [6:0] = { 6'b0, clock };
-
-    pow_5_combinational pow_5_combinational
-    (
-        .n       ( n                     ),
-        .n_pow_5 ( n_pow_5_combinational )
-    );
-
-    pow_5_sequential pow_5_sequential
-    (
-        .clock   ( clock                 ),
-        .reset_n ( reset_n               ),
-        .run     ( run_sequential        ),
-        .n       ( n                     ),
-        .ready   ( ready_sequential      ),
-        .n_pow_5 ( n_pow_5_sequential    )
-    );
-
-    pow_5_pipelined pow_5_pipelined
-    (
-        .clock   ( clock                 ),
-        .n       ( n                     ),
-        .n_pow_5 ( n_pow_5_pipelined     )
-    );
-
-    single_digit_display digit_0
-    (
-        .digit          ( LEDR [ 3: 0] ),
-        .seven_segments ( HEX0         )
-    );
-
-    single_digit_display digit_1
-    (
-        .digit          ( LEDR [ 7: 4] ),
-        .seven_segments ( HEX1         )
-    );
-
-    single_digit_display digit_2
-    (
-        .digit          ( LEDR [11: 8] ),
-        .seven_segments ( HEX2         )
-    );
-
-    single_digit_display digit_3
-    (
-        .digit          ( LEDR [15:12] ),
-        .seven_segments ( HEX3         )
-    );
-
-    single_digit_display digit_4
-    (
-        .digit          ( { 2'b0 , LEDR [17:16] } ),
-        .seven_segments ( HEX4                    )
-    );
-
-    assign HEX5 = 7'h7f;
-    assign HEX6 = 7'h7f;
-    assign HEX7 = 7'h7f;
+    reg_rst_n_en        i_res_vld (clk, rst_n, clk_en, res_vld_d, res_vld);
+    reg_no_rst_en # (8) i_res     (clk, clk_en, res_d, res);
 
 endmodule
 */
+//--------------------------------------------------------------------
 
 module top
 (
@@ -313,8 +241,31 @@ module top
     
     // pow_5_single_cycle
     // pow_5_single_cycle_alternative_style
+    // pow_5_multiple_cycles
+    // pow_5_multiple_cycles_alternative_style
+    // pow_5_pipelined
+
+    /*
 
     pow_5_multiple_cycles
+    # (.w (8))
+    i_pow_5
+    (
+        .clk     ( clk        ),
+        .rst_n   ( rst_n      ),
+        .clk_en  ( clk_en     ),
+        .n_vld   ( key [0]    ),
+        .n       ( sw         ),
+        .res_vld ( res_vld    ),
+        .res     ( disp [7:0] )
+    );
+    
+    assign disp_en  = 8'b00000011;
+    assign disp_dot = { 7'b0000000, res_vld };
+
+    */
+
+    pow_5_pipelined
     # (.w (8))
     i_pow_5
     (

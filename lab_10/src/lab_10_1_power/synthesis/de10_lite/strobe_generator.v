@@ -1,6 +1,6 @@
 module strobe_generator
 # (
-    parameter w = 23
+    parameter w = 24
 )
 (
     input      clk,
