@@ -369,8 +369,8 @@ module pow_5_pipelined_with_array
 
         for (i = 2; i <= 5; i = i + 1)
         begin
-            res_vld [ 5 - i          ] = n_vld [i];
-            res     [(5 - i) * w +: w] = pow   [i];
+            res_vld [ 5 - i          ] = n_vld_reg [i];
+            res     [(5 - i) * w +: w] = pow       [i];
         end
 
 endmodule
