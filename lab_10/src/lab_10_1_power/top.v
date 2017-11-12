@@ -13,77 +13,127 @@ module pow_5_single_cycle
     output [w - 1:0] res
 );
 
-    wire             n_vld_q;
-    wire   [w - 1:0] n_q;
-    wire             res_vld_d;
-    wire   [w - 1:0] res_d;
+    wire           n_vld_q;
+    wire [w - 1:0] n_q;
 
     reg_rst_n_en        i_n_vld   (clk, rst_n, clk_en, n_vld, n_vld_q);
     reg_no_rst_en # (8) i_n       (clk, rst_n, n, n_q);
 
-    assign res_vld_d = n_vld_q;
-    assign res_d     = n_q  * n_q * n_q * n_q * n_q;
+    wire           res_vld_d = n_vld_q;
+    wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
 
     reg_rst_n_en        i_res_vld (clk, rst_n, clk_en, res_vld_d, res_vld);
     reg_no_rst_en # (8) i_res     (clk, clk_en, res_d, res);
 
 endmodule
 
-//--------------------------------------------------------------------
-/*
-module pow_5_combinational
+//----------------------------------------------------------------------------
+
+module pow_5_single_cycle_alternative_style
+# (
+    parameter w = 8
+)
 (
-    input  [7:0] n,
-    output [7:0] n_pow_5
+    input                clk,
+    input                rst_n,
+    input                clk_en,
+    input                n_vld,
+    input      [w - 1:0] n,
+    output reg           res_vld,
+    output reg [w - 1:0] res
 );
 
-    assign n_pow_5 = n * n * n * n * n;
+    reg           n_vld_q;
+    reg [w - 1:0] n_q;
+
+    always @ (posedge clk or negedge rst_n)
+        if (! rst_n)
+            n_vld_q <= 1'b0;
+        else if (clk_en)
+            n_vld_q <= n_vld;
+    
+    always @ (posedge clk)
+        if (clk_en)
+            n_q <= n;
+
+    wire           res_vld_d = n_vld_q;
+    wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
+
+    always @ (posedge clk or negedge rst_n)
+        if (! rst_n)
+            res_vld <= 1'b0;
+        else if (clk_en)
+            res_vld <= res_vld_d;
+
+    always @ (posedge clk)
+        if (clk_en)
+            res <= res_d;
 
 endmodule
 
-//--------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
-module pow_5_sequential
+module pow_5_multiple_cycles
+# (
+    parameter w = 8
+)
 (
-    input        clock,
-    input        reset_n,
-    input        run,
-    input  [7:0] n,
-    output       ready,
-    output [7:0] n_pow_5
+    input            clk,
+    input            rst_n,
+    input            clk_en,
+    input            n_vld,
+    input  [w - 1:0] n,
+    output           res_vld,
+    output [w - 1:0] res
 );
+
+    reg           n_vld_q;
+    reg [w - 1:0] n_q;
+
+    always @ (posedge clk or negedge rst_n)
+        if (! rst_n)
+            n_vld_q <= 1'b0;
+        else if (clk_en)
+            n_vld_q <= n_vld;
+    
+    always @ (posedge clk)
+        if (clk_en)
+            n_q <= n;
 
     reg [4:0] shift;
 
-    always @ (posedge clock or negedge reset_n)
-        if (! reset_n)
+    always @ (posedge clk or negedge rst_n)
+        if (! rst_n)
+        begin
             shift <= 5'b0;
-        else if (run)
-            shift <= 5'b10000;
-        else
-            shift <= shift >> 1;
-
-    assign ready = shift [0];
-
-    reg [7:0] r_n, mul;
-
-    always @(posedge clock)
-        if (run)
-        begin
-            r_n <= n;
-            mul <= n;
         end
-        else
+        else if (clk_en)
         begin
-            mul <= mul * r_n;
+            if (n_vld_q)
+                shift <= 5'b10000;
+            else
+                shift <= shift >> 1;
         end
 
-    assign n_pow_5 = mul;
+    assign res_vld = shift [0];
+
+    reg [w - 1:0] mul;
+
+    always @(posedge clk)
+        if (clk_en)
+        begin
+            if (n_vld_q)
+                mul <= n_q;
+            else
+                mul <= mul * n_q;
+        end
+
+    assign res = mul;
 
 endmodule
 
 //--------------------------------------------------------------------
-
+/*
 module pow_5_pipelined
 (
     input            clock,
@@ -257,11 +307,16 @@ module top
     output [ 7:0] disp_dot
 );
 
-    assign led  = sw;
+    assign led  = { 7'b0, clk_en };
 
     wire res_vld;
     
-    pow_5_single_cycle # (.w (8)) i_pow_5
+    // pow_5_single_cycle
+    // pow_5_single_cycle_alternative_style
+
+    pow_5_multiple_cycles
+    # (.w (8))
+    i_pow_5
     (
         .clk     ( clk        ),
         .rst_n   ( rst_n      ),

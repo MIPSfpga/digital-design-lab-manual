@@ -1,6 +1,6 @@
 module strobe_generator
 # (
-    parameter w = 22
+    parameter w = 23
 )
 (
     input      clk,
@@ -20,7 +20,7 @@ module strobe_generator
         if (! rst_n)
             strobe <= 1'b0;
         else
-            strobe <= 1'b1; // (cnt [w - 1:0] == 1'b0);
+            strobe <= (cnt [w - 1:0] == 1'b0);
 
 endmodule
  
