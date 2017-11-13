@@ -377,6 +377,69 @@ endmodule
 
 //--------------------------------------------------------------------
 
+module pow_5_pipelined_with_array_and_n_stages
+# (
+    parameter width    = 8,
+              n_stages = 4 
+)
+(
+    input                                 clk,
+    input                                 rst_n,
+    input                                 clk_en,
+    input                                 n_vld,
+    input      [ width            - 1:0 ] n,
+    output reg [ n_stages         - 1:0 ] res_vld,
+    output reg [ width * n_stages - 1:0 ] res
+);
+
+    reg [ width - 1 :            0 ] n_reg [ 1 : n_stages     ];
+    reg [ width - 1 :            0 ] pow   [ 2 : n_stages + 1 ];
+    reg [         1 : n_stages + 1 ] n_vld_reg;
+
+    integer i;
+
+    always @ (posedge clk or negedge rst_n)
+
+        if (! rst_n)
+        begin
+            for (i = 1; i <= n_stages + 1; i = i + 1)
+                n_vld_reg [i] <= 1'b0;
+        end
+        else if (clk_en)
+        begin
+            n_vld_reg [1] <= n_vld;
+
+            for (i = 1; i <= n_stages; i = i + 1)
+                n_vld_reg [i + 1] <= n_vld_reg [i];
+        end
+
+    always @ (posedge clk)
+
+        if (clk_en)
+        begin
+            n_reg [1] <= n;
+
+            for (i = 1; i <= n_stages - 1; i = i + 1)
+                n_reg [i + 1] <= n_reg [i];
+
+            pow [2] <= n_reg [1] * n_reg [1];
+
+            for (i = 2; i <= n_stages; i = i + 1)
+                pow [i + 1] <= pow [i] * n_reg [i];
+        end
+
+    always @*
+
+        for (i = 2; i <= n_stages + 1; i = i + 1)
+        begin
+            res_vld [  n_stages + 1 - i                   ] = n_vld_reg [i];
+            res     [ (n_stages + 1 - i) * width +: width ] = pow       [i];
+        end
+
+endmodule
+
+//--------------------------------------------------------------------
+
 module top
 (
     input         clk,
@@ -425,9 +488,10 @@ module top
 
     // pow_5_pipelined
     // pow_5_pipelined_alternative_style
-
-    pow_5_pipelined_with_array
-    # (.w (8))
+    // pow_5_pipelined_with_array # (.w (8))
+    
+    pow_5_pipelined_with_array_and_n_stages
+    # (.width (8), .n_stages (4))
     i_pow_5
     (
         .clk     ( clk         ),
