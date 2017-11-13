@@ -183,8 +183,8 @@ module pow_5_pipelined
     input                rst_n,
     input                clk_en,
     input                n_vld,
-    input  [w - 1:0]     n,
-    output [3:0]         res_vld,
+    input  [w     - 1:0] n,
+    output [        3:0] res_vld,
     output [w * 4 - 1:0] res
 );
 
@@ -258,6 +258,58 @@ endmodule
 
 //--------------------------------------------------------------------
 
+module pow_5_pipelined_with_generate
+# (
+    parameter w        = 8,
+              n_stages = 4
+)
+(
+    input                clk,
+    input                rst_n,
+    input                clk_en,
+    input                n_vld,
+    input  [w     - 1:0] n,
+    output [        3:0] res_vld,
+    output [w * 4 - 1:0] res
+);
+
+    wire [w - 1:0] mul_d     [ 1 : n_stages     ];
+
+    wire           n_vld_q   [ 0 : n_stages + 1 ];
+    wire [w - 1:0] n_q       [ 0 : n_stages + 1 ];
+    wire [w - 1:0] mul_q     [ 0 : n_stages + 1 ];
+
+    assign n_vld_q [0] = n_vld;
+    assign n_q     [0] = n;
+    
+    assign mul_d   [1] = n_q [1] * n_q [1];
+
+    generate
+    
+        genvar i;
+    
+        for (i = 2; i <= n_stages; i + i + 1)
+            assign mul_d [i] = mul_q [i] * n_q [i];
+
+        for (i = 0; i <= n_stages; i + i + 1)
+        begin
+            reg_rst_n_en        i_n_vld ( clk , rst_n  , clk_en , n_vld_q [i] , n_vld_q [i + 1]);
+            reg_no_rst_en # (8) i_n     ( clk ,          clk_en , n_q     [i] , n_q     [i + 1]);
+            reg_no_rst_en # (8) i_mul   ( clk ,          clk_en , mul_d   [i] , mul_q   [i + 1]);
+        end
+        
+        for (i = 2; i <= n_stages + 1; i = i + 1)
+        begin
+            assign res_vld [   n_stages + 1 - i            ] = n_vld_q [i];
+            assign res     [ ( n_stages + 1 - i ) * w +: w ] = mul_q   [i];
+        end
+    
+    endgenerate
+
+endmodule
+
+//--------------------------------------------------------------------
+
 module pow_5_pipelined_alternative_style
 # (
     parameter w = 8
@@ -267,8 +319,8 @@ module pow_5_pipelined_alternative_style
     input                rst_n,
     input                clk_en,
     input                n_vld,
-    input  [w - 1:0]     n,
-    output [3:0]         res_vld,
+    input  [w     - 1:0] n,
+    output [        3:0] res_vld,
     output [w * 4 - 1:0] res
 );
 
@@ -324,8 +376,8 @@ module pow_5_pipelined_with_array
     input                    rst_n,
     input                    clk_en,
     input                    n_vld,
-    input      [w - 1:0]     n,
-    output reg [3:0]         res_vld,
+    input      [w     - 1:0] n,
+    output reg [        3:0] res_vld,
     output reg [w * 4 - 1:0] res
 );
 
@@ -379,22 +431,22 @@ endmodule
 
 module pow_5_pipelined_with_array_and_n_stages
 # (
-    parameter width    = 8,
+    parameter w        = 8,
               n_stages = 4 
 )
 (
-    input                                 clk,
-    input                                 rst_n,
-    input                                 clk_en,
-    input                                 n_vld,
-    input      [ width            - 1:0 ] n,
-    output reg [ n_stages         - 1:0 ] res_vld,
-    output reg [ width * n_stages - 1:0 ] res
+    input                             clk,
+    input                             rst_n,
+    input                             clk_en,
+    input                             n_vld,
+    input      [ w            - 1:0 ] n,
+    output reg [     n_stages - 1:0 ] res_vld,
+    output reg [ w * n_stages - 1:0 ] res
 );
 
-    reg [ width - 1 :            0 ] n_reg [ 1 : n_stages     ];
-    reg [ width - 1 :            0 ] pow   [ 2 : n_stages + 1 ];
-    reg [         1 : n_stages + 1 ] n_vld_reg;
+    reg [ w - 1 :            0 ] n_reg [ 1 : n_stages     ];
+    reg [ w - 1 :            0 ] pow   [ 2 : n_stages + 1 ];
+    reg [     1 : n_stages + 1 ] n_vld_reg;
 
     integer i;
 
@@ -432,8 +484,8 @@ module pow_5_pipelined_with_array_and_n_stages
 
         for (i = 2; i <= n_stages + 1; i = i + 1)
         begin
-            res_vld [  n_stages + 1 - i                   ] = n_vld_reg [i];
-            res     [ (n_stages + 1 - i) * width +: width ] = pow       [i];
+            res_vld [  n_stages + 1 - i           ] = n_vld_reg [i];
+            res     [ (n_stages + 1 - i) * w +: w ] = pow       [i];
         end
 
 endmodule
@@ -489,9 +541,11 @@ module top
     // pow_5_pipelined
     // pow_5_pipelined_alternative_style
     // pow_5_pipelined_with_array # (.w (8))
-    
-    pow_5_pipelined_with_array_and_n_stages
-    # (.width (8), .n_stages (4))
+    // pow_5_pipelined_with_array_and_n_stages
+    // pow_5_pipelined_with_generate
+
+    pow_5_pipelined_with_generate
+    # (.w (8), .n_stages (4))
     i_pow_5
     (
         .clk     ( clk         ),
