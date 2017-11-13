@@ -277,7 +277,7 @@ module pow_5_pipelined_with_generate
 
     wire           n_vld_q   [ 0 : n_stages + 1 ];
     wire [w - 1:0] n_q       [ 0 : n_stages + 1 ];
-    wire [w - 1:0] mul_q     [ 0 : n_stages + 1 ];
+    wire [w - 1:0] mul_q     [ 2 : n_stages + 1 ];
 
     assign n_vld_q [0] = n_vld;
     assign n_q     [0] = n;
@@ -288,18 +288,28 @@ module pow_5_pipelined_with_generate
     
         genvar i;
     
-        for (i = 2; i <= n_stages; i + i + 1)
+        for (i = 2; i <= n_stages; i = i + 1)
+        begin : b_mul
             assign mul_d [i] = mul_q [i] * n_q [i];
+        end
 
-        for (i = 0; i <= n_stages; i + i + 1)
-        begin
-            reg_rst_n_en        i_n_vld ( clk , rst_n  , clk_en , n_vld_q [i] , n_vld_q [i + 1]);
-            reg_no_rst_en # (8) i_n     ( clk ,          clk_en , n_q     [i] , n_q     [i + 1]);
-            reg_no_rst_en # (8) i_mul   ( clk ,          clk_en , mul_d   [i] , mul_q   [i + 1]);
+        for (i = 1; i <= n_stages; i = i + 1)
+        begin : b_mul_reg
+            reg_no_rst_en # (8) i_mul
+                (clk, clk_en, mul_d [i], mul_q [i + 1]);
+        end
+
+        for (i = 0; i <= n_stages; i = i + 1)
+        begin : b_regs
+            reg_rst_n_en i_n_vld
+                (clk, rst_n, clk_en, n_vld_q [i], n_vld_q [i + 1]);
+
+            reg_no_rst_en # (8) i_n
+                (clk, clk_en, n_q [i], n_q [i + 1]);
         end
         
         for (i = 2; i <= n_stages + 1; i = i + 1)
-        begin
+        begin : b_res
             assign res_vld [   n_stages + 1 - i            ] = n_vld_q [i];
             assign res     [ ( n_stages + 1 - i ) * w +: w ] = mul_q   [i];
         end
@@ -541,10 +551,10 @@ module top
     // pow_5_pipelined
     // pow_5_pipelined_alternative_style
     // pow_5_pipelined_with_array # (.w (8))
-    // pow_5_pipelined_with_array_and_n_stages
+    pow_5_pipelined_with_array_and_n_stages
     // pow_5_pipelined_with_generate
 
-    pow_5_pipelined_with_generate
+    // pow_5_pipelined_with_generate
     # (.w (8), .n_stages (4))
     i_pow_5
     (
