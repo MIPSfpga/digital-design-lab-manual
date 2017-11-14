@@ -19,19 +19,26 @@ module wrapper
     inout  [35:0] GPIO
 );
 
-    wire divided_clk, clk;
+    wire clk   =   MAX10_CLK1_50;
     wire rst_n = ~ SW [9];
+
+    wire div_clk;
     
     clk_divider # (.w (24)) i_clk_divider
     (
-        .clk         ( MAX10_CLK1_50 ),
-        .rst_n       ( rst_n         ),
-        .divided_clk ( divided_clk   )
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .div_clk ( div_clk )
     );
 
-    global gclk (divided_clk, clk);
+    wire clk_en;
 
-    wire clk_en = 1'b1;
+    strobe_generator # (.w (24)) i_strobe_generator
+    (
+        .clk    ( clk    ),
+        .rst_n  ( rst_n  ),
+        .strobe ( clk_en )
+    );
 
     wire   [ 7:0] disp_en;
     wire   [31:0] disp;

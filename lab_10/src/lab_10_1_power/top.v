@@ -551,10 +551,10 @@ module top
     // pow_5_pipelined
     // pow_5_pipelined_alternative_style
     // pow_5_pipelined_with_array # (.w (8))
-    pow_5_pipelined_with_array_and_n_stages
+    // pow_5_pipelined_with_array_and_n_stages
     // pow_5_pipelined_with_generate
 
-    // pow_5_pipelined_with_generate
+    pow_5_pipelined_with_generate
     # (.w (8), .n_stages (4))
     i_pow_5
     (

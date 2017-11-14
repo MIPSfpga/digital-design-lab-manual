@@ -14,12 +14,8 @@ set_global_assignment -name VERILOG_FILE              ../../../top.v
 set_global_assignment -name VERILOG_FILE              ../../../lib/reg_rst_n_en.v
 set_global_assignment -name VERILOG_FILE              ../../../lib/reg_no_rst_en.v
 
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to *CLK*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to *
 set_instance_assignment -name IO_STANDARD "3.3 V Schmitt Trigger" -to KEY*
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to SW*
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to LEDR*
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to HEX*
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to GPIO*
 
 set_location_assignment PIN_N5   -to ADC_CLK_10
 set_location_assignment PIN_P11  -to MAX10_CLK1_50
