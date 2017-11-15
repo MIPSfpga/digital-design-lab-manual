@@ -1,5 +1,3 @@
 rd /s /q project
 mkdir project
-
-copy *.qpf project
-copy *.qsf project
+copy ..\..\..\common\synthesis\de10_lite\*.q* project

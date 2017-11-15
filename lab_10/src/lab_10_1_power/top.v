@@ -504,9 +504,10 @@ endmodule
 
 module top
 (
-    input         clk,
+    input         fast_clk,
+    input         slow_clk,
     input         rst_n,
-    input         clk_en,
+    input         fast_clk_en,
     input  [ 3:0] key,
     input  [ 7:0] sw,
     output [ 7:0] led,
@@ -558,9 +559,9 @@ module top
     # (.w (8), .n_stages (4))
     i_pow_5
     (
-        .clk     ( clk         ),
+        .clk     ( fast_clk    ),
         .rst_n   ( rst_n       ),
-        .clk_en  ( clk_en      ),
+        .clk_en  ( fast_clk_en ),
         .n_vld   ( key [0]     ),
         .n       ( sw          ),
         .res_vld ( res_vld     ),

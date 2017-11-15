@@ -2,4 +2,4 @@
 
 rm -rf project
 mkdir project
-cp *.qpf *.qsf project
+cp ../../../common/synthesis/de10_lite/*.q[ps]f project
