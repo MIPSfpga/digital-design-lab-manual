@@ -1,0 +1,10 @@
+
+sed -i s/pow_5_single_cycle/pow_5_single_cycle_struct/g top.v
+sed -i s/pow_5_single_cycle_alternative_style/pow_5_single_cycle_always/g top.v
+sed -i s/pow_5_multiple_cycles/pow_5_multi_cycle_struct/g top.v
+sed -i s/pow_5_multiple_cycles_alternative_style/pow_5_multi_cycle_always/g top.v
+sed -i s/pow_5_pipelined/pow_5_pipe_struct/g top.v
+sed -i s/pow_5_pipelined_with_generate/pow_5_pipe_struct_with_generate/g top.v
+sed -i s/pow_5_pipelined_alternative_style/pow_5_pipe_always/g top.v
+sed -i s/pow_5_pipelined_with_array/pow_5_pipe_always_with_array/g top.v
+sed -i s/pow_5_pipelined_with_array_and_n_stages/pow_5_pipe_always_with_array_and_n_stages/g top.v

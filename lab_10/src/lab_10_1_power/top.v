@@ -1,5 +1,5 @@
 
-module pow_5_single_cycle
+module pow_5_en_single_cycle_struct
 # (
     parameter w = 8
 )
@@ -29,7 +29,7 @@ endmodule
 
 //----------------------------------------------------------------------------
 
-module pow_5_single_cycle_alternative_style
+module pow_5_en_single_cycle_struct_alternative_style
 # (
     parameter w = 8
 )
@@ -73,7 +73,7 @@ endmodule
 
 //----------------------------------------------------------------------------
 
-module pow_5_multiple_cycles
+module pow_5_en_multi_cycle_struct
 # (
     parameter w = 8
 )
@@ -113,7 +113,7 @@ endmodule
 
 //----------------------------------------------------------------------------
 
-module pow_5_multiple_cycles_alternative_style
+module pow_5_en_multi_cycle_struct_alternative_style
 # (
     parameter w = 8
 )
@@ -174,7 +174,7 @@ endmodule
 
 //--------------------------------------------------------------------
 
-module pow_5_pipelined
+module pow_5_en_pipe_struct
 # (
     parameter w = 8
 )
@@ -258,7 +258,7 @@ endmodule
 
 //--------------------------------------------------------------------
 
-module pow_5_pipelined_with_generate
+module pow_5_en_pipe_struct_with_generate
 # (
     parameter w        = 8,
               n_stages = 4
@@ -320,7 +320,7 @@ endmodule
 
 //--------------------------------------------------------------------
 
-module pow_5_pipelined_alternative_style
+module pow_5_en_pipe_struct_alternative_style
 # (
     parameter w = 8
 )
@@ -377,7 +377,7 @@ endmodule
 
 //--------------------------------------------------------------------
 
-module pow_5_pipelined_with_array
+module pow_5_en_pipe_struct_with_array
 # (
     parameter w = 8
 )
@@ -439,7 +439,7 @@ endmodule
 
 //--------------------------------------------------------------------
 
-module pow_5_pipelined_with_array_and_n_stages
+module pow_5_en_pipe_struct_with_array_and_n_stages
 # (
     parameter w        = 8,
               n_stages = 4 
@@ -521,17 +521,17 @@ module top
     
     assign led  = { 8 { res_vld } };
 
-    // pow_5_single_cycle
-    // pow_5_single_cycle_alternative_style
-    // pow_5_multiple_cycles
-    // pow_5_multiple_cycles_alternative_style
-    // pow_5_pipelined
+    // pow_5_en_single_cycle_struct
+    // pow_5_en_single_cycle_struct_alternative_style
+    // pow_5_en_multi_cycle_struct
+    // pow_5_en_multi_cycle_struct_alternative_style
+    // pow_5_en_pipe_struct
 
     /*
 
-    pow_5_multiple_cycles
+    pow_5_en_multi_cycle_struct
     # (.w (8))
-    i_pow_5
+    i_pow_5_en
     (
         .clk     ( clk        ),
         .rst_n   ( rst_n      ),
@@ -549,15 +549,15 @@ module top
 
     wire [3:0] res_vld;
 
-    // pow_5_pipelined
-    // pow_5_pipelined_alternative_style
-    // pow_5_pipelined_with_array # (.w (8))
-    // pow_5_pipelined_with_array_and_n_stages
-    // pow_5_pipelined_with_generate
+    // pow_5_en_pipe_struct
+    // pow_5_en_pipe_struct_alternative_style
+    // pow_5_en_pipe_struct_with_array # (.w (8))
+    // pow_5_en_pipe_struct_with_array_and_n_stages
+    // pow_5_en_pipe_struct_with_generate
 
-    pow_5_pipelined_with_generate
+    pow_5_en_pipe_struct_with_generate
     # (.w (8), .n_stages (4))
-    i_pow_5
+    i_pow_5_en
     (
 /*
         .clk     ( fast_clk    ),
