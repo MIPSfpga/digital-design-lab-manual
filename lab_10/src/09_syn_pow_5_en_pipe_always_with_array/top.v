@@ -60,6 +60,8 @@ endmodule
 
 //--------------------------------------------------------------------
 
+`ifndef SIMULATION
+
 module top
 (
     input         fast_clk,
@@ -100,3 +102,5 @@ module top
     assign disp_dot = 8'b0;
 
 endmodule
+
+`endif
