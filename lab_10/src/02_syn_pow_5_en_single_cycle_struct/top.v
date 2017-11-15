@@ -16,13 +16,13 @@ module pow_5_en_single_cycle_struct
     wire [w - 1:0] n_q;
 
     reg_rst_n_en        i_n_vld   (clk, rst_n, clk_en, n_vld, n_vld_q);
-    reg_no_rst_en # (8) i_n       (clk, clk_en, n, n_q);
+    reg_no_rst_en # (w) i_n       (clk, clk_en, n, n_q);
 
     wire           res_vld_d = n_vld_q;
     wire [w - 1:0] res_d     = n_q * n_q * n_q * n_q * n_q;
 
     reg_rst_n_en        i_res_vld (clk, rst_n, clk_en, res_vld_d, res_vld);
-    reg_no_rst_en # (8) i_res     (clk, clk_en, res_d, res);
+    reg_no_rst_en # (w) i_res     (clk, clk_en, res_d, res);
 
 endmodule
 

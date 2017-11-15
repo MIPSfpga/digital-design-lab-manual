@@ -16,7 +16,7 @@ module pow_5_en_multi_cycle_struct
     wire [w - 1:0] n_q;
 
     reg_rst_n_en        i_n_vld (clk, rst_n, clk_en, n_vld, n_vld_q);
-    reg_no_rst_en # (8) i_n     (clk, clk_en, n, n_q);
+    reg_no_rst_en # (w) i_n     (clk, clk_en, n, n_q);
 
     wire [4:0] shift_d = n_vld_q ? 5'b10000 : shift_q >> 1;
     wire [4:0] shift_q;
@@ -30,7 +30,7 @@ module pow_5_en_multi_cycle_struct
 
     wire mul_en = clk_en;  // && (n_vld_q || shift_q [4:1] != 4'b0);
 
-    reg_no_rst_en # (8) i_mul (clk, mul_en, mul_d, mul_q);
+    reg_no_rst_en # (w) i_mul (clk, mul_en, mul_d, mul_q);
     
     assign res = mul_q;
 

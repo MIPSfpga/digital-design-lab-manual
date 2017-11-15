@@ -1,6 +1,10 @@
 `timescale 1 ns / 100 ps
 
-module testbench;
+module testbench
+# (
+    parameter w        = 16,
+              n_stages = 4
+);
 
     //------------------------------------------------------------------------
     //
@@ -112,7 +116,7 @@ module testbench;
     );
 
       pow_5_en_pipe_struct_with_generate
-    # (.w (w), n_stages (4))
+    # (.w (w), .n_stages (4))
     i_pow_5_en_pipe_struct_with_generate_4
     (
         .clk     ( clk    ),
@@ -162,9 +166,9 @@ module testbench;
         .res_vld ( res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4 ),
         .res     ( res_pow_5_en_pipe_always_with_array_and_n_stages_4     )
     );
-
+/*
       pow_5_en_pipe_struct_with_generate
-    # (.w (w), n_stages (5))
+    # (.w (w), .n_stages (5))
     i_pow_5_en_pipe_struct_with_generate_5
     (
         .clk     ( clk    ),
@@ -188,7 +192,7 @@ module testbench;
         .res_vld ( res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5 ),
         .res     ( res_pow_5_en_pipe_always_with_array_and_n_stages_5     )
     );
-
+*/
     //------------------------------------------------------------------------
     //
     //  Clock and reset
