@@ -4,21 +4,21 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY  .
 
 set_global_assignment -name TOP_LEVEL_ENTITY          wrapper
 
-set_global_assignment -name SEARCH_PATH  ../../..
-set_global_assignment -name SEARCH_PATH  ../../../common/synthesis/de10_lite
-set_global_assignment -name SEARCH_PATH  ../../../common/synthesis
+set_global_assignment -name SEARCH_PATH  ../..
+set_global_assignment -name SEARCH_PATH  ../../common/synthesis/de10_lite
+set_global_assignment -name SEARCH_PATH  ../../common/synthesis
 
-set_global_assignment -name VERILOG_FILE ../../../../common/reg_no_rst_en.v
-set_global_assignment -name VERILOG_FILE ../../../../common/reg_no_rst.v
-set_global_assignment -name VERILOG_FILE ../../../../common/reg_rst_n_en.v
-set_global_assignment -name VERILOG_FILE ../../../../common/reg_rst_n.v
-set_global_assignment -name VERILOG_FILE ../../../top.v
-set_global_assignment -name VERILOG_FILE ../../../../common/synthesis/clk_divider.v
-set_global_assignment -name VERILOG_FILE ../../../../common/synthesis/display_driver.v
-set_global_assignment -name VERILOG_FILE ../../../../common/synthesis/strobe_generator.v
-set_global_assignment -name VERILOG_FILE ../../../../common/synthesis/de10_lite/wrapper.v
+set_global_assignment -name VERILOG_FILE ../../../common/reg_no_rst_en.v
+set_global_assignment -name VERILOG_FILE ../../../common/reg_no_rst.v
+set_global_assignment -name VERILOG_FILE ../../../common/reg_rst_n_en.v
+set_global_assignment -name VERILOG_FILE ../../../common/reg_rst_n.v
+set_global_assignment -name VERILOG_FILE ../../top.v
+set_global_assignment -name VERILOG_FILE ../../../common/synthesis/clk_divider.v
+set_global_assignment -name VERILOG_FILE ../../../common/synthesis/display_driver.v
+set_global_assignment -name VERILOG_FILE ../../../common/synthesis/strobe_generator.v
+set_global_assignment -name VERILOG_FILE ../../../common/synthesis/de10_lite/wrapper.v
 
-set_global_assignment -name SDC_FILE     ../../../../common/synthesis/de10_lite/wrapper.sdc
+set_global_assignment -name SDC_FILE     ../../../common/synthesis/de10_lite/wrapper.sdc
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL"           -to *CLK*
 set_instance_assignment -name IO_STANDARD "3.3 V Schmitt Trigger" -to KEY*
