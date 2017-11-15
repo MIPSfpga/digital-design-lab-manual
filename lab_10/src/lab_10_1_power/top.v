@@ -559,9 +559,14 @@ module top
     # (.w (8), .n_stages (4))
     i_pow_5
     (
+/*
         .clk     ( fast_clk    ),
         .rst_n   ( rst_n       ),
         .clk_en  ( fast_clk_en ),
+*/
+        .clk     ( slow_clk    ),
+        .rst_n   ( rst_n       ),
+        .clk_en  ( 1'b1        ),
         .n_vld   ( key [0]     ),
         .n       ( sw          ),
         .res_vld ( res_vld     ),
