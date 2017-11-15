@@ -1,37 +1,252 @@
+`timescale 1 ns / 100 ps
 
-// testbench is a module which only task is to test another module
-// testbench is for simulation only, not for synthesis
 module testbench;
 
-    // input and output test signals
-    reg  [1:0] key;
-    wire [9:0] led;
+    //------------------------------------------------------------------------
+    //
+    //  Signals
+    //
+    //------------------------------------------------------------------------
 
-    // creating the instance of the module we want to test
-    //  lab1 - module name
-    //  dut  - instance name ('dut' means 'device under test')
-    lab1 dut ( key, led );
+    reg clk;
+    reg rst_n;
+    reg clk_en;
+    reg n_vld;
 
-    // do at the beginning of the simulation
-    initial 
+    reg [ w - 1:0 ] n;
+
+    wire                    res_vld_pow_5_en_single_cycle_struct;
+    wire                    res_vld_pow_5_en_single_cycle_always;
+    wire                    res_vld_pow_5_en_multi_cycle_struct;
+    wire                    res_vld_pow_5_en_multi_cycle_always;
+    wire [ n_stages - 1:0 ] res_vld_pow_5_en_pipe_struct;
+    wire [ 4        - 1:0 ] res_vld_pow_5_en_pipe_struct_with_generate_4;
+    wire [ n_stages - 1:0 ] res_vld_pow_5_en_pipe_always;
+    wire [ n_stages - 1:0 ] res_vld_pow_5_en_pipe_always_with_array;
+    wire [ 4        - 1:0 ] res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4;
+    wire [ 5        - 1:0 ] res_vld_pow_5_en_pipe_struct_with_generate_5;
+    wire [ 5        - 1:0 ] res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5;
+
+
+    wire [ w            - 1:0 ] res_pow_5_en_single_cycle_struct;
+    wire [ w            - 1:0 ] res_pow_5_en_single_cycle_always;
+    wire [ w            - 1:0 ] res_pow_5_en_multi_cycle_struct;
+    wire [ w            - 1:0 ] res_pow_5_en_multi_cycle_always;
+    wire [ w * n_stages - 1:0 ] res_pow_5_en_pipe_struct;
+    wire [ w * 4        - 1:0 ] res_pow_5_en_pipe_struct_with_generate_4;
+    wire [ w * n_stages - 1:0 ] res_pow_5_en_pipe_always;
+    wire [ w * n_stages - 1:0 ] res_pow_5_en_pipe_always_with_array;
+    wire [ w * 4        - 1:0 ] res_pow_5_en_pipe_always_with_array_and_n_stages_4;
+    wire [ w * 5        - 1:0 ] res_pow_5_en_pipe_struct_with_generate_5;
+    wire [ w * 5        - 1:0 ] res_pow_5_en_pipe_always_with_array_and_n_stages_5;
+
+    //------------------------------------------------------------------------
+    //
+    //  Instantiations
+    //
+    //------------------------------------------------------------------------
+
+      pow_5_en_single_cycle_struct
+    # (.w (w))
+    i_pow_5_en_single_cycle_struct
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_single_cycle_struct ),
+        .res     ( res_pow_5_en_single_cycle_struct     )
+    );
+
+      pow_5_en_single_cycle_always
+    # (.w (w))
+    i_pow_5_en_single_cycle_always
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_single_cycle_always ),
+        .res     ( res_pow_5_en_single_cycle_always     )
+    );
+
+      pow_5_en_multi_cycle_struct
+    # (.w (w))
+    i_pow_5_en_multi_cycle_struct
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_multi_cycle_struct ),
+        .res     ( res_pow_5_en_multi_cycle_struct     )
+    );
+
+      pow_5_en_multi_cycle_always
+    # (.w (w))
+    i_pow_5_en_multi_cycle_always
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_multi_cycle_always ),
+        .res     ( res_pow_5_en_multi_cycle_always     )
+    );
+
+      pow_5_en_pipe_struct
+    # (.w (w))
+    i_pow_5_en_pipe_struct
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_struct ),
+        .res     ( res_pow_5_en_pipe_struct     )
+    );
+
+      pow_5_en_pipe_struct_with_generate
+    # (.w (w), n_stages (4))
+    i_pow_5_en_pipe_struct_with_generate_4
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_struct_with_generate_4 ),
+        .res     ( res_pow_5_en_pipe_struct_with_generate_4     )
+    );
+
+      pow_5_en_pipe_always
+    # (.w (w))
+    i_pow_5_en_pipe_always
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_always ),
+        .res     ( res_pow_5_en_pipe_always     )
+    );
+
+      pow_5_en_pipe_always_with_array
+    # (.w (w))
+    i_pow_5_en_pipe_always_with_array
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_always_with_array ),
+        .res     ( res_pow_5_en_pipe_always_with_array     )
+    );
+      
+      pow_5_en_pipe_always_with_array_and_n_stages
+    # (.w (w), .n_stages (4))
+    i_pow_5_en_pipe_always_with_array_and_n_stages_4
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4 ),
+        .res     ( res_pow_5_en_pipe_always_with_array_and_n_stages_4     )
+    );
+
+      pow_5_en_pipe_struct_with_generate
+    # (.w (w), n_stages (5))
+    i_pow_5_en_pipe_struct_with_generate_5
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_struct_with_generate_5 ),
+        .res     ( res_pow_5_en_pipe_struct_with_generate_5     )
+    );
+
+      pow_5_en_pipe_always_with_array_and_n_stages
+    # (.w (w), .n_stages (5))
+    i_pow_5_en_pipe_always_with_array_and_n_stages_5
+    (
+        .clk     ( clk    ),
+        .rst_n   ( rst_n  ),
+        .clk_en  ( clk_en ),
+        .n_vld   ( n_vld  ),
+        .n       ( n      ),
+        .res_vld ( res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5 ),
+        .res     ( res_pow_5_en_pipe_always_with_array_and_n_stages_5     )
+    );
+
+    //------------------------------------------------------------------------
+    //
+    //  Clock and reset
+    //
+    //------------------------------------------------------------------------
+
+    initial
+    begin
+        clk = 0;
+   
+        forever
+            # 10 clk = ! clk;
+    end
+ 
+    initial
+    begin
+        clk_en <= 1'b1;
+        n_vld  <= 1'b0;
+
+        repeat (2) @ (posedge clk);
+        rst_n <= 0;
+        repeat (2) @ (posedge clk);
+        rst_n <= 1;
+    end
+
+    //------------------------------------------------------------------------
+    //
+    //  Main sequence
+    //
+    //------------------------------------------------------------------------
+
+    integer i;
+
+    initial
+    begin
+        #0
+        $dumpvars;
+
+        @ (posedge rst_n);
+        @ (posedge clk);
+
+        for (i = 0; i < 50; i = i + 1)
         begin
-            key = 2'b00;    // set test signals value
-            #10;            // pause
-            key = 2'b01;    // set test signals value
-            #10;            // pause
-            key = 2'b10;    // set test signals value
-            #10;            // pause
-            key = 2'b11;    // set test signals value
-            #10;            // pause
+            n     <= i & 7;
+            n_vld <= (i == 0 || res_vld_pow_5_en_multi_cycle_struct);
+
+            @ (posedge clk);
         end
 
-    // do at the beginning of the simulation
-    //  print signal values on every change
-    initial 
-        $monitor("key=%b led=%b", key, led);
+        for (i = 0; i < 50; i = i + 1)
+        begin
+            n     <= i & 7;
+            n_vld <= 1;
 
-    // do at the beginning of the simulation
-    initial 
-        $dumpvars;  //iverilog dump init
+            @ (posedge clk);
+        end
+
+        $finish;
+    end
 
 endmodule
