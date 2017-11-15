@@ -52,13 +52,13 @@ module top
     # (.w (8))
     i_pow_5_en
     (
-        .clk     ( clk        ),
-        .rst_n   ( rst_n      ),
-        .clk_en  ( clk_en     ),
-        .n_vld   ( key [0]    ),
-        .n       ( sw         ),
-        .res_vld ( res_vld    ),
-        .res     ( disp [7:0] )
+        .clk     ( fast_clk    ),
+        .rst_n   ( rst_n       ),
+        .clk_en  ( fast_clk_en ),
+        .n_vld   ( key [0]     ),
+        .n       ( sw          ),
+        .res_vld ( res_vld     ),
+        .res     ( disp [7:0]  )
     );
     
     assign disp_en  = 8'b00000011;
