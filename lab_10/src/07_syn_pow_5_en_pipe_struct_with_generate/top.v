@@ -4,13 +4,13 @@ module pow_5_en_pipe_struct_with_generate
               n_stages = 4
 )
 (
-    input                clk,
-    input                rst_n,
-    input                clk_en,
-    input                n_vld,
-    input  [w     - 1:0] n,
-    output [        3:0] res_vld,
-    output [w * 4 - 1:0] res
+    input                       clk,
+    input                       rst_n,
+    input                       clk_en,
+    input                       n_vld,
+    input  [w            - 1:0] n,
+    output [    n_stages - 1:0] res_vld,
+    output [w * n_stages - 1:0] res
 );
 
     wire [w - 1:0] mul_d     [ 1 : n_stages     ];

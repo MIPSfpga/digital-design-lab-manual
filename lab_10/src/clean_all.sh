@@ -1,0 +1,1 @@
+rm -rfv */sim */*/project

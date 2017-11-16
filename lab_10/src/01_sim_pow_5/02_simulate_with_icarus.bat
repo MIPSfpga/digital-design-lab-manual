@@ -1,9 +1,22 @@
+
+rem recreate a temp folder for all the simulation files
+
 rd /s /q sim
 md sim
 cd sim
 
-iverilog -s testbench ..\testbench.v ..\..\lab1.v 
-vvp -la.lst -n a.out -vcd
+rem compile verilog files for simulation
+
+iverilog -D SIMULATION -s testbench ../../*/*.v
+
+rem run the simulation and finish on $stop
+
+vvp -l a.lst -n a.out
+
+rem show the simulation results in GTKwave
 
 gtkwave dump.vcd
+
+rem return to the parent folder
+
 cd ..

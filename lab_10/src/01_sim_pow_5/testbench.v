@@ -2,7 +2,7 @@
 
 module testbench
 # (
-    parameter w        = 16,
+    parameter w        = 8,
               n_stages = 4
 );
 
@@ -166,7 +166,7 @@ module testbench
         .res_vld ( res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4 ),
         .res     ( res_pow_5_en_pipe_always_with_array_and_n_stages_4     )
     );
-/*
+
       pow_5_en_pipe_struct_with_generate
     # (.w (w), .n_stages (5))
     i_pow_5_en_pipe_struct_with_generate_5
@@ -192,7 +192,7 @@ module testbench
         .res_vld ( res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5 ),
         .res     ( res_pow_5_en_pipe_always_with_array_and_n_stages_5     )
     );
-*/
+
     //------------------------------------------------------------------------
     //
     //  Clock and reset
@@ -232,6 +232,18 @@ module testbench
         $dumpvars;
 
         @ (posedge rst_n);
+
+        repeat (10) @ (posedge clk);
+
+        n     <= 3;
+        n_vld <= 1;
+
+        @ (posedge clk);
+
+        n_vld <= 0;
+
+        repeat (10) @ (posedge clk);
+
         @ (posedge clk);
 
         for (i = 0; i < 50; i = i + 1)
@@ -242,6 +254,8 @@ module testbench
             @ (posedge clk);
         end
 
+        repeat (10) @ (posedge clk);
+
         for (i = 0; i < 50; i = i + 1)
         begin
             n     <= i & 7;
@@ -250,7 +264,69 @@ module testbench
             @ (posedge clk);
         end
 
-        $finish;
+        $stop;
+    end
+
+    //------------------------------------------------------------------------
+    //
+    //  Checking with assertions
+    //
+    //------------------------------------------------------------------------
+
+
+    reg check;
+
+    always @ (posedge clk)
+    begin
+        check =
+    
+               res_vld_pow_5_en_single_cycle_struct
+           === res_vld_pow_5_en_single_cycle_always    
+
+        &&     res_vld_pow_5_en_multi_cycle_struct
+           === res_vld_pow_5_en_multi_cycle_always    
+                 
+        &&     res_vld_pow_5_en_pipe_struct
+           === res_vld_pow_5_en_pipe_struct_with_generate_4    
+                 
+        &&     res_vld_pow_5_en_pipe_struct
+           === res_vld_pow_5_en_pipe_always    
+                 
+        &&     res_vld_pow_5_en_pipe_struct
+           === res_vld_pow_5_en_pipe_always_with_array    
+                 
+        &&     res_vld_pow_5_en_pipe_struct
+           === res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4
+
+        &&     res_vld_pow_5_en_pipe_struct_with_generate_5
+           === res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5
+
+        //--------------------------------------------------------------------
+
+        &&     res_pow_5_en_single_cycle_struct
+           === res_pow_5_en_single_cycle_always   
+
+        &&     res_pow_5_en_multi_cycle_struct
+           === res_pow_5_en_multi_cycle_always    
+                 
+        &&     res_pow_5_en_pipe_struct
+           === res_pow_5_en_pipe_struct_with_generate_4    
+                 
+        &&     res_pow_5_en_pipe_struct
+           === res_pow_5_en_pipe_always    
+                 
+        &&     res_pow_5_en_pipe_struct
+           === res_pow_5_en_pipe_always_with_array    
+                 
+        &&     res_pow_5_en_pipe_struct
+           === res_pow_5_en_pipe_always_with_array_and_n_stages_4    
+
+        &&     res_pow_5_en_pipe_struct_with_generate_5
+           === res_pow_5_en_pipe_always_with_array_and_n_stages_5
+        ;
+        
+        if (! check)
+            $display ("Something went wrong");
     end
 
 endmodule
