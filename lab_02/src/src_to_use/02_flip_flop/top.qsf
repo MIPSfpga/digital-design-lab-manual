@@ -1,0 +1,44 @@
+set_global_assignment -name DEVICE                    5CEBA4F23C7
+set_global_assignment -name TOP_LEVEL_ENTITY          top
+set_global_assignment -name VERILOG_FILE              ../top.v
+set_global_assignment -name SDC_FILE                  ../top.sdc
+set_global_assignment -name NUM_PARALLEL_PROCESSORS   4
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY  .
+
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clock
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to reset_n
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to key[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to key[1]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to key[2]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to key[3]
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[1]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[2]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[3]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[4]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[5]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[6]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[7]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[8]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to led[9]
+
+#set_location_assignment PIN_M9  -to clock
+#set_location_assignment PIN_P22 -to reset_n
+
+set_location_assignment PIN_U7  -to key[0]
+set_location_assignment PIN_W9  -to key[1]
+#set_location_assignment PIN_M7  -to key[2]
+#set_location_assignment PIN_M6  -to key[3]
+
+set_location_assignment PIN_AA2 -to led[0]
+set_location_assignment PIN_AA1 -to led[1]
+#set_location_assignment PIN_W2  -to led[2]
+#set_location_assignment PIN_Y3  -to led[3]
+#set_location_assignment PIN_N2  -to led[4]
+#set_location_assignment PIN_N1  -to led[5]
+#set_location_assignment PIN_U2  -to led[6]
+#set_location_assignment PIN_U1  -to led[7]
+#set_location_assignment PIN_L2  -to led[8]
+#set_location_assignment PIN_L1  -to led[9]

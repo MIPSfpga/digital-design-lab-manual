@@ -1,0 +1,13 @@
+01_sr_latch
+02_d_latch
+03_d_flip_flop
+04_dff_with_sync_rst_n
+05_dff_with_async_rst_n
+06_dff_with_en
+07_dff_parameterized
+reg_no_rst_en.v
+reg_no_rst.v
+reg_rst_n_en.v
+reg_rst_n.v
+src_to_use
+z
