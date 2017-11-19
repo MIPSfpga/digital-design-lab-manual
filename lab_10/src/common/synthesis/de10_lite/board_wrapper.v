@@ -46,7 +46,7 @@ module board_wrapper
     wire   [31:0] disp;
     wire   [ 7:0] disp_dot;
 
-    top i_top
+    board_independent_wrapper i_board_independent_wrapper
     (
         .fast_clk    ( fast_clk                    ),
         .slow_clk    ( slow_clk                    ),
