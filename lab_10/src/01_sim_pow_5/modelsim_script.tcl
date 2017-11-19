@@ -5,6 +5,7 @@ vlib work
 
 # compile all the Verilog sources
 
+vlog ../../common/reg*.v
 vlog ../../*/pow_5_*.v
 vlog ../testbench.v
 
