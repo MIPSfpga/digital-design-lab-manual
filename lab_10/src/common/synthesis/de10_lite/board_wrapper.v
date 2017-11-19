@@ -1,4 +1,4 @@
-module wrapper
+module board_wrapper
 (
     input         ADC_CLK_10,
     input         MAX10_CLK1_50,
