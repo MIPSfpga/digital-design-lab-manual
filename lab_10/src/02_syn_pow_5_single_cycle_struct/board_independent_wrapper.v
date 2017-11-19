@@ -16,7 +16,7 @@ module board_independent_wrapper
     
     assign led  = { 8 { res_vld } };
 
-    pow_5_en_single_cycle_struct
+    pow_5_single_cycle_struct
     # (.w (8))
     i_pow_5_en
     (

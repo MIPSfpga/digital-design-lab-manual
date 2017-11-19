@@ -1,4 +1,4 @@
-module pow_5_en_single_cycle_struct
+module pow_5_single_cycle_struct
 # (
     parameter w = 8
 )

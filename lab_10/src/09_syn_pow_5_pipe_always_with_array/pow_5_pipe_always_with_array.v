@@ -1,4 +1,4 @@
-module pow_5_en_pipe_always_with_array
+module pow_5_pipe_always_with_array
 # (
     parameter w = 8
 )

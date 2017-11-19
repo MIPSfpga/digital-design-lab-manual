@@ -1,4 +1,4 @@
-module pow_5_en_pipe_always
+module pow_5_pipe_always
 # (
     parameter w = 8
 )

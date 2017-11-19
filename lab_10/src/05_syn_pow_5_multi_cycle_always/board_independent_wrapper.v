@@ -16,7 +16,7 @@ module board_independent_wrapper
     
     assign led  = { 8 { res_vld } };
 
-    pow_5_en_multi_cycle_always
+    pow_5_multi_cycle_always
     # (.w (8))
     i_pow_5_en
     (

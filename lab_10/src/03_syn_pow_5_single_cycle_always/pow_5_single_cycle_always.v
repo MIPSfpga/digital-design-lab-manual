@@ -1,4 +1,4 @@
-module pow_5_en_single_cycle_always
+module pow_5_single_cycle_always
 # (
     parameter w = 8
 )

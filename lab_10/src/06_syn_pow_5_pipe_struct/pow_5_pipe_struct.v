@@ -1,4 +1,4 @@
-module pow_5_en_pipe_struct
+module pow_5_pipe_struct
 # (
     parameter w = 8
 )
