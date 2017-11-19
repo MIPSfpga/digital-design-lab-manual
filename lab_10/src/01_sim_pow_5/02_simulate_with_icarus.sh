@@ -8,7 +8,7 @@ cd     sim
 
 # compile verilog files for simulation
 
-iverilog -D SIMULATION -s testbench ../../*/*.v
+iverilog -s testbench ../../*/pow_5_*.v
 
 # run the simulation and finish on $stop
 

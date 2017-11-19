@@ -19,17 +19,17 @@ module testbench
 
     reg [ w - 1:0 ] n;
 
-    wire                    res_vld_pow_5_en_single_cycle_struct;
-    wire                    res_vld_pow_5_en_single_cycle_always;
-    wire                    res_vld_pow_5_en_multi_cycle_struct;
-    wire                    res_vld_pow_5_en_multi_cycle_always;
-    wire [ n_stages - 1:0 ] res_vld_pow_5_en_pipe_struct;
-    wire [ 4        - 1:0 ] res_vld_pow_5_en_pipe_struct_with_generate_4;
-    wire [ n_stages - 1:0 ] res_vld_pow_5_en_pipe_always;
-    wire [ n_stages - 1:0 ] res_vld_pow_5_en_pipe_always_with_array;
-    wire [ 4        - 1:0 ] res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4;
-    wire [ 5        - 1:0 ] res_vld_pow_5_en_pipe_struct_with_generate_5;
-    wire [ 5        - 1:0 ] res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5;
+    wire                        res_vld_pow_5_en_single_cycle_struct;
+    wire                        res_vld_pow_5_en_single_cycle_always;
+    wire                        res_vld_pow_5_en_multi_cycle_struct;
+    wire                        res_vld_pow_5_en_multi_cycle_always;
+    wire [ n_stages     - 1:0 ] res_vld_pow_5_en_pipe_struct;
+    wire [ 4            - 1:0 ] res_vld_pow_5_en_pipe_struct_with_generate_4;
+    wire [ n_stages     - 1:0 ] res_vld_pow_5_en_pipe_always;
+    wire [ n_stages     - 1:0 ] res_vld_pow_5_en_pipe_always_with_array;
+    wire [ 4            - 1:0 ] res_vld_pow_5_en_pipe_always_with_array_and_n_stages_4;
+    wire [ 5            - 1:0 ] res_vld_pow_5_en_pipe_struct_with_generate_5;
+    wire [ 5            - 1:0 ] res_vld_pow_5_en_pipe_always_with_array_and_n_stages_5;
 
 
     wire [ w            - 1:0 ] res_pow_5_en_single_cycle_struct;

@@ -5,7 +5,8 @@ vlib work
 
 # compile all the Verilog sources
 
-vlog +define+SIMULATION ../../*/*.v
+vlog ../../*/pow_5_*.v
+vlog ../testbench.v
 
 # open the testbench module for simulation
 
