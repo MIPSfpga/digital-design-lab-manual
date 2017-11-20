@@ -16,7 +16,7 @@ module board_independent_wrapper
 
     pow_5_pipe_always
     # (.w (8))
-    i_pow_5_en
+    i_pow_5
     (
         .clk     ( fast_clk    ),
         .rst_n   ( rst_n       ),

@@ -16,7 +16,7 @@ module board_independent_wrapper
 
     pow_5_en_pipe_always_with_array_and_n_stages
     # (.w (8), .n_stages (4))
-    i_pow_5_en
+    i_pow_5
     (
         .clk     ( fast_clk    ),
         .rst_n   ( rst_n       ),
