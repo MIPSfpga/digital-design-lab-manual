@@ -18,9 +18,8 @@ module board_independent_wrapper
     # (.w (8), .n_stages (4))
     i_pow_5
     (
-        .clk     ( fast_clk    ),
+        .clk     ( slow_clk    ),
         .rst_n   ( rst_n       ),
-        .clk_en  ( fast_clk_en ),
         .n_vld   ( key [0]     ),
         .n       ( sw          ),
         .res_vld ( res_vld     ),
