@@ -1,13 +1,13 @@
 module dff_with_en
 (
-	input d,
-	input clk,
-	input en,
-	output reg q
+    input       clk,
+    input       en,
+    input       d,
+    output reg  q
 );
 
-	always @ (posedge clk)
-		if (en)
-			q <= d;
+    always @ (posedge clk)
+        if (en)
+            q <= d;
  
 endmodule
