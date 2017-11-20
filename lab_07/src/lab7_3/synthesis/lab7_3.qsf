@@ -1,0 +1,26 @@
+set_global_assignment -name FAMILY "MAX 10"
+set_global_assignment -name DEVICE 10M50DAF484C7G
+set_global_assignment -name TOP_LEVEL_ENTITY lab7_3
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+
+set_location_assignment PIN_A7 -to clk
+set_location_assignment PIN_F15 -to we
+set_location_assignment PIN_C10 -to data_in[0]
+set_location_assignment PIN_C11 -to data_in[1]
+set_location_assignment PIN_D12 -to read_addr[0]
+set_location_assignment PIN_C12 -to read_addr[1]
+set_location_assignment PIN_A12 -to read_addr[2]
+set_location_assignment PIN_B12 -to write_addr[0]
+set_location_assignment PIN_A13 -to write_addr[1]
+set_location_assignment PIN_A14 -to write_addr[2]
+set_location_assignment PIN_D13 -to data_out[1]
+set_location_assignment PIN_C13 -to data_out[0]
+
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to clk
+set_instance_assignment -name IO_STANDARD "3.3 V LVTTL" -to we
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to data_in*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to read_addr*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to write_addr*
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to data_out*
+
+set_global_assignment -name VERILOG_FILE lab7_3.v
