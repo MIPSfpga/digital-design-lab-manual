@@ -5,7 +5,6 @@ module pow_5_pipe_always_with_array
 (
     input                    clk,
     input                    rst_n,
-    input                    clk_en,
     input                    n_vld,
     input      [w     - 1:0] n,
     output reg [        3:0] res_vld,
@@ -25,7 +24,7 @@ module pow_5_pipe_always_with_array
             for (i = 1; i <= 5; i = i + 1)
                 n_vld_reg [i] <= 1'b0;
         end
-        else if (clk_en)
+        else
         begin
             n_vld_reg [1] <= n_vld;
 
@@ -34,26 +33,25 @@ module pow_5_pipe_always_with_array
         end
 
     always @ (posedge clk)
+    begin
+        n_reg [1] <= n;
 
-        if (clk_en)
-        begin
-            n_reg [1] <= n;
+        for (i = 1; i <= 3; i = i + 1)
+            n_reg [i + 1] <= n_reg [i];
 
-            for (i = 1; i <= 3; i = i + 1)
-                n_reg [i + 1] <= n_reg [i];
+        pow [2] <= n_reg [1] * n_reg [1];
 
-            pow [2] <= n_reg [1] * n_reg [1];
-
-            for (i = 2; i <= 4; i = i + 1)
-                pow [i + 1] <= pow [i] * n_reg [i];
-        end
+        for (i = 2; i <= 4; i = i + 1)
+            pow [i + 1] <= pow [i] * n_reg [i];
+    end
 
     always @*
-
+    begin
         for (i = 2; i <= 5; i = i + 1)
         begin
             res_vld [ 5 - i          ] = n_vld_reg [i];
             res     [(5 - i) * w +: w] = pow       [i];
         end
+    end
 
 endmodule

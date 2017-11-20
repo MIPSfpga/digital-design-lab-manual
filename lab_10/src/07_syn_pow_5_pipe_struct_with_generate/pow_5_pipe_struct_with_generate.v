@@ -6,7 +6,6 @@ module pow_5_pipe_struct_with_generate
 (
     input                       clk,
     input                       rst_n,
-    input                       clk_en,
     input                       n_vld,
     input  [w            - 1:0] n,
     output [    n_stages - 1:0] res_vld,
@@ -35,17 +34,17 @@ module pow_5_pipe_struct_with_generate
 
         for (i = 1; i <= n_stages; i = i + 1)
         begin : b_mul_reg
-            reg_no_rst_en # (w) i_mul
-                (clk, clk_en, mul_d [i], mul_q [i + 1]);
+            reg_no_rst # (w) i_mul
+                (clk, mul_d [i], mul_q [i + 1]);
         end
 
         for (i = 0; i <= n_stages; i = i + 1)
         begin : b_regs
-            reg_rst_n_en i_n_vld
-                (clk, rst_n, clk_en, n_vld_q [i], n_vld_q [i + 1]);
+            reg_rst_n i_n_vld
+                (clk, rst_n, n_vld_q [i], n_vld_q [i + 1]);
 
-            reg_no_rst_en # (w) i_n
-                (clk, clk_en, n_q [i], n_q [i + 1]);
+            reg_no_rst # (w) i_n
+                (clk, n_q [i], n_q [i + 1]);
         end
         
         for (i = 2; i <= n_stages + 1; i = i + 1)
