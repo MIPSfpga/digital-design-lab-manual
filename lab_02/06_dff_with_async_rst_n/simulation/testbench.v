@@ -11,11 +11,12 @@ module testbench;
 
     initial
     begin
-        rst_n = 0;
+        rst_n = 1;
+        clk   = 1;
         
         $monitor ("%0d clk %b d %b q %b", $time, clk, d, q);
 
-        # 20;   clk = 0; d = 0; 
+        # 20;   clk = 0; d = 0; rst_n = 0;
         # 20;   clk = 1; d = 0; 
         # 20;   clk = 0; d = 1;
         # 20;   clk = 1; d = 1;

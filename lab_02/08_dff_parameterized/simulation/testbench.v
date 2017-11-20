@@ -13,6 +13,7 @@ module testbench;
     initial
     begin
         rst_n = 1;
+        clk   = 1;
         
         $monitor ("%0d clk %b d %b q %b", $time, clk, d, q);
 
