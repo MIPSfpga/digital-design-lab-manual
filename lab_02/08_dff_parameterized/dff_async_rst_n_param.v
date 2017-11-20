@@ -1,4 +1,4 @@
-module dff_async_rst_n
+module dff_async_rst_n_param
 #(
     parameter WIDTH = 8,
               RESET = 8'b1

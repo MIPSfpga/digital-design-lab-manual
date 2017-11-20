@@ -6,7 +6,7 @@ module testbench;
     reg  [3:0] d;
     wire [3:0] q;
 
-    dff_async_rst_n #(.WIDTH(4), .RESET(4'ha)) dff_async_rst_n (clk, rst_n, d, q);
+    dff_async_rst_n_param #(.WIDTH(4), .RESET(4'ha)) dff_async_rst_n_param (clk, rst_n, d, q);
     
     initial $dumpvars;
 
