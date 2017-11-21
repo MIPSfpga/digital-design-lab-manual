@@ -1,4 +1,5 @@
 set_global_assignment -name DEVICE                    10M50DAF484C7G
+set_global_assignment -name FAMILY                    "MAX 10 FPGA"
 set_global_assignment -name NUM_PARALLEL_PROCESSORS   4
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY  .
 
