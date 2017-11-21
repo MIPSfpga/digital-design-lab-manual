@@ -8,14 +8,14 @@ module d_flip_flop
 );
     wire n1;
 
-    d_latch l1
+    d_latch master
     (
         .clk ( ~clk ),
         .d   ( d    ),
         .q   ( n1   )
     );
 
-    d_latch l2
+    d_latch slave
     (
         .clk ( clk ),
         .d   ( n1  ),

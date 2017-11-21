@@ -1,7 +1,7 @@
 module dff_async_rst_n_param
 #(
     parameter WIDTH = 8,
-              RESET = 8'b1
+              RESET = 8'b0
 )
 (
     input                      clk,
