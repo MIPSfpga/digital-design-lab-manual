@@ -9,6 +9,8 @@ module de10_lite
     output [ 9:0] LEDR
 );
 
+    assign LEDR[9:2] = 7'b0;
+
     rs_trigger rs_trigger
     (
         .s   ( ~KEY [0] ),
