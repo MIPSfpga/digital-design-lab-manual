@@ -5,7 +5,7 @@ module testbench;
     reg  s, r;
     wire q, q_n;
 
-    rs_trigger rs_trigger (s, r, q, q_n);
+    sr_latch sr_latch (s, r, q, q_n);
     
     initial $dumpvars;
 
