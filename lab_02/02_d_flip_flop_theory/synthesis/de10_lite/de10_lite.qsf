@@ -8,7 +8,7 @@ set_global_assignment -name TOP_LEVEL_ENTITY          de10_lite
 set_global_assignment -name SEARCH_PATH  ../
 set_global_assignment -name SEARCH_PATH  ../../
 
-set_global_assignment -name VERILOG_FILE ../../rs_trigger.v
+set_global_assignment -name VERILOG_FILE ../../sr_latch.v
 set_global_assignment -name VERILOG_FILE ../../d_latch.v
 set_global_assignment -name VERILOG_FILE ../../d_flip_flop.v
 set_global_assignment -name VERILOG_FILE ../de10_lite.v

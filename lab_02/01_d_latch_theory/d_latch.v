@@ -9,6 +9,6 @@ module d_latch
     wire r = ~d & clk;
     wire s = d & clk;
 
-    rs_trigger rs_trigger (s, r, q, q_n);
+    sr_latch sr_latch (s, r, q, q_n);
 
 endmodule

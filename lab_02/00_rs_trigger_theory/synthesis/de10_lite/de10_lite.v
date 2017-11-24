@@ -11,7 +11,7 @@ module de10_lite
 
     assign LEDR[9:2] = 7'b0;
 
-    rs_trigger rs_trigger
+    sr_latch sr_latch
     (
         .s   ( ~KEY [0] ),
         .r   ( ~KEY [1] ),

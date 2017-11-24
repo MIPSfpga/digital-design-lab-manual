@@ -1,4 +1,4 @@
-module rs_trigger
+module sr_latch
 (
     input   s,
     input   r,
