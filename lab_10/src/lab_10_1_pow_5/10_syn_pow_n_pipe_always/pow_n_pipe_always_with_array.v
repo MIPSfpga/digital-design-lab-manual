@@ -46,11 +46,14 @@ module pow_n_pipe_always
     end
 
     always @*
-
+    begin
         for (i = 1; i <= n; i = i + 1)
-        begin
-            res_vld [  n - i           ] = arg_vld_reg [i];
-            res     [ (n - i) * w +: w ] = pow         [i];
-        end
+            res_vld [n - i] = arg_vld_reg [i];
+
+        res [(n - 1) * w +: w] = arg_reg [1];
+
+        for (i = 2; i <= n; i = i + 1)
+            res [(n - i) * w +: w] = pow [i];
+    end
 
 endmodule

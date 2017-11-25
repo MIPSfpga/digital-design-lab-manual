@@ -48,10 +48,12 @@ module pow_5_pipe_always_with_array
     always @*
     begin
         for (i = 1; i <= 5; i = i + 1)
-        begin
-            res_vld [ 5 - i          ] = arg_vld_reg [i];
-            res     [(5 - i) * w +: w] = pow       [i];
-        end
+            res_vld [5 - i] = arg_vld_reg [i];
+
+        res [(5 - 1) * w +: w] = arg_reg [1];
+
+        for (i = 2; i <= 5; i = i + 1)
+            res [(5 - i) * w +: w] = pow [i];
     end
 
 endmodule

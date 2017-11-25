@@ -433,124 +433,121 @@ module testbench
     //------------------------------------------------------------------------
 
 
-    reg check;
+    reg [31:0] checks;
 
     always @ (posedge clk)
     begin
-        check =
 
         //--------------------------------------------------------------------
 
-               res_vld_pow_5_single_cycle_struct
-           === res_vld_pow_5_single_cycle_always
+        checks [ 0] = (     res_vld_pow_5_single_cycle_struct
+                        === res_vld_pow_5_single_cycle_always );
 
-        &&     res_vld_pow_5_multi_cycle_struct
-           === res_vld_pow_5_multi_cycle_always
+        checks [ 1] = (     res_vld_pow_5_multi_cycle_struct
+                        === res_vld_pow_5_multi_cycle_always );
 
-        &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_n_pipe_struct_5
+        checks [ 2] = (     res_vld_pow_5_pipe_struct
+                        === res_vld_pow_n_pipe_struct_5 );
 
-        &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_5_pipe_always
+        checks [ 3] = (     res_vld_pow_5_pipe_struct
+                        === res_vld_pow_5_pipe_always );
 
-        &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_5_pipe_always_with_array
+        checks [ 4] = (     res_vld_pow_5_pipe_struct
+                        === res_vld_pow_5_pipe_always_with_array );
 
-        &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_n_pipe_always_5
+        checks [ 5] = (     res_vld_pow_5_pipe_struct
+                        === res_vld_pow_n_pipe_always_5 );
 
-        &&     res_vld_pow_n_pipe_struct_6
-           === res_vld_pow_n_pipe_always_6
-
-        //--------------------------------------------------------------------
-
-        &&     res_pow_5_single_cycle_struct
-           === res_pow_5_single_cycle_always
-
-        &&     res_pow_5_multi_cycle_struct
-           === res_pow_5_multi_cycle_always
-
-        &&     res_pow_5_pipe_struct
-           === res_pow_n_pipe_struct_5
-
-        &&     res_pow_5_pipe_struct
-           === res_pow_5_pipe_always
-
-        &&     res_pow_5_pipe_struct
-           === res_pow_5_pipe_always_with_array
-
-        &&     res_pow_5_pipe_struct
-           === res_pow_n_pipe_always_5
-
-        &&     res_pow_n_pipe_struct_6
-           === res_pow_n_pipe_always_6
+        checks [ 6] = (     res_vld_pow_n_pipe_struct_6
+                        === res_vld_pow_n_pipe_always_6 );
 
         //--------------------------------------------------------------------
 
-        &&     res_vld_pow_5_en_single_cycle_struct
-           === res_vld_pow_5_en_single_cycle_always
+        checks [ 7] = (     res_pow_5_single_cycle_struct
+                        === res_pow_5_single_cycle_always );
 
-        &&     res_vld_pow_5_en_multi_cycle_struct
-           === res_vld_pow_5_en_multi_cycle_always
+        checks [ 8] = (     res_pow_5_multi_cycle_struct
+                        === res_pow_5_multi_cycle_always );
 
-        &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_n_en_pipe_struct_5
+        checks [ 9] = (     res_pow_5_pipe_struct
+                        === res_pow_n_pipe_struct_5 );
 
-        &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_5_en_pipe_always
+        checks [10] = (     res_pow_5_pipe_struct
+                        === res_pow_5_pipe_always );
 
-        &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_5_en_pipe_always_with_array
+        checks [11] = (     res_pow_5_pipe_struct
+                        === res_pow_5_pipe_always_with_array );
 
-        &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_n_en_pipe_always_5
+        checks [12] = (     res_pow_5_pipe_struct
+                        === res_pow_n_pipe_always_5 );
 
-        &&     res_vld_pow_n_en_pipe_struct_6
-           === res_vld_pow_n_en_pipe_always_6
-
-        //--------------------------------------------------------------------
-
-        &&     res_pow_5_en_single_cycle_struct
-           === res_pow_5_en_single_cycle_always
-
-        &&     res_pow_5_en_multi_cycle_struct
-           === res_pow_5_en_multi_cycle_always
-
-        &&     res_pow_5_en_pipe_struct
-           === res_pow_n_en_pipe_struct_5
-
-        &&     res_pow_5_en_pipe_struct
-           === res_pow_5_en_pipe_always
-
-        &&     res_pow_5_en_pipe_struct
-           === res_pow_5_en_pipe_always_with_array
-
-        &&     res_pow_5_en_pipe_struct
-           === res_pow_n_en_pipe_always_5
-
-        &&     res_pow_n_en_pipe_struct_6
-           === res_pow_n_en_pipe_always_6
+        checks [13] = (     res_pow_n_pipe_struct_6
+                        === res_pow_n_pipe_always_6 );
 
         //--------------------------------------------------------------------
 
-        &&     res_vld_pow_5_single_cycle_struct
-           === res_vld_pow_5_en_single_cycle_struct
+        checks [14] = (     res_vld_pow_5_en_single_cycle_struct
+                        === res_vld_pow_5_en_single_cycle_always );
 
-        &&     res_vld_pow_5_multi_cycle_struct
-           === res_vld_pow_5_en_multi_cycle_struct
+        checks [15] = (     res_vld_pow_5_en_multi_cycle_struct
+                        === res_vld_pow_5_en_multi_cycle_always );
 
-        &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_5_en_pipe_struct
+        checks [16] = (     res_vld_pow_5_en_pipe_struct
+                        === res_vld_pow_n_en_pipe_struct_5 );
 
-        &&     res_vld_pow_n_pipe_struct_6
-           === res_vld_pow_n_en_pipe_struct_6
+        checks [17] = (     res_vld_pow_5_en_pipe_struct
+                        === res_vld_pow_5_en_pipe_always );
 
-        ;
+        checks [18] = (     res_vld_pow_5_en_pipe_struct
+                        === res_vld_pow_5_en_pipe_always_with_array );
+
+        checks [19] = (     res_vld_pow_5_en_pipe_struct
+                        === res_vld_pow_n_en_pipe_always_5 );
+
+        checks [20] = (     res_vld_pow_n_en_pipe_struct_6
+                        === res_vld_pow_n_en_pipe_always_6 );
 
         //--------------------------------------------------------------------
 
-        if (! check)
-            $display ("Something went wrong");
+        checks [21] = (     res_pow_5_en_single_cycle_struct
+                        === res_pow_5_en_single_cycle_always );
+
+        checks [22] = (     res_pow_5_en_multi_cycle_struct
+                        === res_pow_5_en_multi_cycle_always );
+
+        checks [23] = (     res_pow_5_en_pipe_struct
+                        === res_pow_n_en_pipe_struct_5 );
+
+        checks [24] = (     res_pow_5_en_pipe_struct
+                        === res_pow_5_en_pipe_always );
+
+        checks [25] = (     res_pow_5_en_pipe_struct
+                        === res_pow_5_en_pipe_always_with_array );
+
+        checks [26] = (     res_pow_5_en_pipe_struct
+                        === res_pow_n_en_pipe_always_5 );
+
+        checks [27] = (     res_pow_n_en_pipe_struct_6
+                        === res_pow_n_en_pipe_always_6 );
+
+        //--------------------------------------------------------------------
+
+        checks [28] = (     res_vld_pow_5_single_cycle_struct
+                        === res_vld_pow_5_en_single_cycle_struct );
+
+        checks [29] = (     res_vld_pow_5_multi_cycle_struct
+                        === res_vld_pow_5_en_multi_cycle_struct );
+
+        checks [30] = (     res_vld_pow_5_pipe_struct
+                        === res_vld_pow_5_en_pipe_struct );
+
+        checks [31] = (     res_vld_pow_n_pipe_struct_6
+                        === res_vld_pow_n_en_pipe_struct_6 );
+
+        //--------------------------------------------------------------------
+
+        if ((~ checks) != 0)
+            $display ("Something went wrong %b", checks);
     end
 
 endmodule
