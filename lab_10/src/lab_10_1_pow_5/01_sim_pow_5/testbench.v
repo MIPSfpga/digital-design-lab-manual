@@ -170,7 +170,7 @@ module testbench
         .res_vld ( res_vld_pow_5_pipe_always_with_array ),
         .res     ( res_pow_5_pipe_always_with_array     )
     );
-      
+
       pow_n_pipe_always
     # (.w (w), .n (5))
     i_pow_n_pipe_always_5
@@ -312,7 +312,7 @@ module testbench
         .res_vld ( res_vld_pow_5_en_pipe_always_with_array ),
         .res     ( res_pow_5_en_pipe_always_with_array     )
     );
-      
+
       pow_n_en_pipe_always
     # (.w (w), .n (5))
     i_pow_n_en_pipe_always_5
@@ -361,11 +361,11 @@ module testbench
     initial
     begin
         clk = 0;
-   
+
         forever
             # 10 clk = ! clk;
     end
- 
+
     initial
     begin
         clk_en  <= 1'b1;
@@ -438,24 +438,24 @@ module testbench
     always @ (posedge clk)
     begin
         check =
-    
+
         //--------------------------------------------------------------------
 
                res_vld_pow_5_single_cycle_struct
-           === res_vld_pow_5_single_cycle_always    
+           === res_vld_pow_5_single_cycle_always
 
         &&     res_vld_pow_5_multi_cycle_struct
-           === res_vld_pow_5_multi_cycle_always    
-                 
+           === res_vld_pow_5_multi_cycle_always
+
         &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_n_pipe_struct_5    
-                 
+           === res_vld_pow_n_pipe_struct_5
+
         &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_5_pipe_always    
-                 
+           === res_vld_pow_5_pipe_always
+
         &&     res_vld_pow_5_pipe_struct
-           === res_vld_pow_5_pipe_always_with_array    
-                 
+           === res_vld_pow_5_pipe_always_with_array
+
         &&     res_vld_pow_5_pipe_struct
            === res_vld_pow_n_pipe_always_5
 
@@ -465,22 +465,22 @@ module testbench
         //--------------------------------------------------------------------
 
         &&     res_pow_5_single_cycle_struct
-           === res_pow_5_single_cycle_always   
+           === res_pow_5_single_cycle_always
 
         &&     res_pow_5_multi_cycle_struct
-           === res_pow_5_multi_cycle_always    
-                 
+           === res_pow_5_multi_cycle_always
+
         &&     res_pow_5_pipe_struct
-           === res_pow_n_pipe_struct_5    
-                 
+           === res_pow_n_pipe_struct_5
+
         &&     res_pow_5_pipe_struct
-           === res_pow_5_pipe_always    
-                 
+           === res_pow_5_pipe_always
+
         &&     res_pow_5_pipe_struct
-           === res_pow_5_pipe_always_with_array    
-                 
+           === res_pow_5_pipe_always_with_array
+
         &&     res_pow_5_pipe_struct
-           === res_pow_n_pipe_always_5    
+           === res_pow_n_pipe_always_5
 
         &&     res_pow_n_pipe_struct_6
            === res_pow_n_pipe_always_6
@@ -488,20 +488,20 @@ module testbench
         //--------------------------------------------------------------------
 
         &&     res_vld_pow_5_en_single_cycle_struct
-           === res_vld_pow_5_en_single_cycle_always    
+           === res_vld_pow_5_en_single_cycle_always
 
         &&     res_vld_pow_5_en_multi_cycle_struct
-           === res_vld_pow_5_en_multi_cycle_always    
-                 
+           === res_vld_pow_5_en_multi_cycle_always
+
         &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_n_en_pipe_struct_5    
-                 
+           === res_vld_pow_n_en_pipe_struct_5
+
         &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_5_en_pipe_always    
-                 
+           === res_vld_pow_5_en_pipe_always
+
         &&     res_vld_pow_5_en_pipe_struct
-           === res_vld_pow_5_en_pipe_always_with_array    
-                 
+           === res_vld_pow_5_en_pipe_always_with_array
+
         &&     res_vld_pow_5_en_pipe_struct
            === res_vld_pow_n_en_pipe_always_5
 
@@ -511,22 +511,22 @@ module testbench
         //--------------------------------------------------------------------
 
         &&     res_pow_5_en_single_cycle_struct
-           === res_pow_5_en_single_cycle_always   
+           === res_pow_5_en_single_cycle_always
 
         &&     res_pow_5_en_multi_cycle_struct
-           === res_pow_5_en_multi_cycle_always    
-                 
+           === res_pow_5_en_multi_cycle_always
+
         &&     res_pow_5_en_pipe_struct
-           === res_pow_n_en_pipe_struct_5    
-                 
+           === res_pow_n_en_pipe_struct_5
+
         &&     res_pow_5_en_pipe_struct
-           === res_pow_5_en_pipe_always    
-                 
+           === res_pow_5_en_pipe_always
+
         &&     res_pow_5_en_pipe_struct
-           === res_pow_5_en_pipe_always_with_array    
-                 
+           === res_pow_5_en_pipe_always_with_array
+
         &&     res_pow_5_en_pipe_struct
-           === res_pow_n_en_pipe_always_5    
+           === res_pow_n_en_pipe_always_5
 
         &&     res_pow_n_en_pipe_struct_6
            === res_pow_n_en_pipe_always_6
@@ -538,7 +538,7 @@ module testbench
 
         &&     res_vld_pow_5_multi_cycle_struct
            === res_vld_pow_5_en_multi_cycle_struct
-                 
+
         &&     res_vld_pow_5_pipe_struct
            === res_vld_pow_5_en_pipe_struct
 
@@ -546,7 +546,7 @@ module testbench
            === res_vld_pow_n_en_pipe_struct_6
 
         ;
-        
+
         //--------------------------------------------------------------------
 
         if (! check)
