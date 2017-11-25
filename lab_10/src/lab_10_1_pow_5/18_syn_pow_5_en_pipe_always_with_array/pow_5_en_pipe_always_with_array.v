@@ -7,9 +7,9 @@ module pow_5_en_pipe_always_with_array
     input                    rst_n,
     input                    clk_en,
     input                    arg_vld,
-    input      [w     - 1:0] arg,
-    output reg [        3:0] res_vld,
-    output reg [w * 4 - 1:0] res
+    input      [    w - 1:0] arg,
+    output reg [        4:0] res_vld,
+    output reg [5 * w - 1:0] res
 );
 
     reg [w - 1:0] arg_reg [1:4];

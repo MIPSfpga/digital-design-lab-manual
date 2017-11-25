@@ -7,9 +7,9 @@ module pow_5_en_pipe_struct
     input                rst_n,
     input                clk_en,
     input                arg_vld,
-    input  [w     - 1:0] arg,
-    output [        3:0] res_vld,
-    output [w * 4 - 1:0] res
+    input  [    w - 1:0] arg,
+    output [        4:0] res_vld,
+    output [5 * w - 1:0] res
 );
 
     wire           arg_vld_q_1;
