@@ -46,7 +46,7 @@ module pow_5_pipe_always
         pow5 <= pow4 * arg4;
     end
 
-    assign res_vld = { arg_vld_2 , arg_vld_3 , arg_vld_4 , arg_vld_5 };
-    assign res     = { pow2    , pow3    , pow4    , pow5    };
+    assign res_vld = { arg_vld_1 , arg_vld_2 , arg_vld_3 , arg_vld_4 , arg_vld_5 };
+    assign res     = { arg1      , pow2      , pow3      , pow4      , pow5      };
 
 endmodule

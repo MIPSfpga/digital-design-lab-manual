@@ -18,6 +18,9 @@ module pow_5_en_pipe_struct
     reg_rst_n_en        i0_arg_vld (clk, rst_n, clk_en, arg_vld, arg_vld_q_1);
     reg_no_rst_en # (w) i0_arg     (clk, clk_en, arg, arg_q_1);
 
+    assign res_vld [4         ] = arg_vld_q_1;
+    assign res     [4 * w +: w] = arg_q_1;
+
     //------------------------------------------------------------------------
 
     wire [w - 1:0] mul_d_1 = arg_q_1 * arg_q_1;
@@ -30,9 +33,9 @@ module pow_5_en_pipe_struct
     reg_no_rst_en # (w) i1_arg     ( clk ,         clk_en , arg_q_1     , arg_q_2     );
     reg_no_rst_en # (w) i1_mul     ( clk ,         clk_en , mul_d_1     , mul_q_2     );
 
-    assign res_vld [3]   = arg_vld_q_2;
-    assign res     [31:24] = mul_q_2;
-    
+    assign res_vld [3         ] = arg_vld_q_2;
+    assign res     [3 * w +: w] = mul_q_2;
+
     //------------------------------------------------------------------------
 
     wire [w - 1:0] mul_d_2 = mul_q_2 * arg_q_2;
@@ -45,8 +48,8 @@ module pow_5_en_pipe_struct
     reg_no_rst_en # (w) i2_arg     ( clk ,         clk_en , arg_q_2     , arg_q_3     );
     reg_no_rst_en # (w) i2_mul     ( clk ,         clk_en , mul_d_2     , mul_q_3     );
 
-    assign res_vld [2]     = arg_vld_q_3;
-    assign res     [23:16] = mul_q_3;
+    assign res_vld [2         ] = arg_vld_q_3;
+    assign res     [2 * w +: w] = mul_q_3;
 
     //------------------------------------------------------------------------
 
@@ -60,8 +63,8 @@ module pow_5_en_pipe_struct
     reg_no_rst_en # (w) i3_arg     ( clk ,         clk_en , arg_q_3     , arg_q_4     );
     reg_no_rst_en # (w) i3_mul     ( clk ,         clk_en , mul_d_3     , mul_q_4     );
 
-    assign res_vld [1]    = arg_vld_q_4;
-    assign res     [15:8] = mul_q_4;
+    assign res_vld [1         ] = arg_vld_q_4;
+    assign res     [1 * w +: w] = mul_q_4;
 
     //------------------------------------------------------------------------
 
@@ -75,7 +78,7 @@ module pow_5_en_pipe_struct
     reg_no_rst_en # (w) i4_arg     ( clk ,         clk_en , arg_q_4     , arg_q_5     );
     reg_no_rst_en # (w) i4_mul     ( clk ,         clk_en , mul_d_4     , mul_q_5     );
 
-    assign res_vld [0]   = arg_vld_q_5;
-    assign res     [7:0] = mul_q_5;
+    assign res_vld [0         ] = arg_vld_q_5;
+    assign res     [0 * w +: w] = mul_q_5;
 
 endmodule

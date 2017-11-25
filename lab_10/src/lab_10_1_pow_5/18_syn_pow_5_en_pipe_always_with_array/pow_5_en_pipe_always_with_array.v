@@ -50,7 +50,7 @@ module pow_5_en_pipe_always_with_array
 
     always @*
 
-        for (i = 2; i <= 5; i = i + 1)
+        for (i = 1; i <= 5; i = i + 1)
         begin
             res_vld [ 5 - i          ] = arg_vld_reg [i];
             res     [(5 - i) * w +: w] = pow         [i];

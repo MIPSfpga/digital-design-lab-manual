@@ -46,7 +46,7 @@ module pow_n_pipe_struct
                 (clk, arg_q [i], arg_q [i + 1]);
         end
         
-        for (i = 2; i <= n; i = i + 1)
+        for (i = 1; i <= n; i = i + 1)
         begin : b_res
             assign res_vld [   n - i            ] = arg_vld_q [i];
             assign res     [ ( n - i ) * w +: w ] = mul_q     [i];
