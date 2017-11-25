@@ -21,7 +21,7 @@ module pow_5_single_cycle_always
             arg_vld_q <= arg_vld;
     
     always @ (posedge clk)
-        arg_q <= n;
+        arg_q <= arg;
 
     wire           res_vld_d = arg_vld_q;
     wire [w - 1:0] res_d     = arg_q  * arg_q * arg_q * arg_q * arg_q;

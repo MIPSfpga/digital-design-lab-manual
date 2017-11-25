@@ -23,7 +23,7 @@ module pow_5_en_single_cycle_always
     
     always @ (posedge clk)
         if (clk_en)
-            arg_q <= n;
+            arg_q <= arg;
 
     wire           res_vld_d = arg_vld_q;
     wire [w - 1:0] res_d     = arg_q  * arg_q * arg_q * arg_q * arg_q;

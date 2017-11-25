@@ -43,7 +43,7 @@ module pow_n_pipe_struct
             reg_rst_n i_arg_vld
                 (clk, rst_n, arg_vld_q [i], arg_vld_q [i + 1]);
 
-            reg_no_rst # (w) i_n
+            reg_no_rst # (w) i_arg
                 (clk, arg_q [i], arg_q [i + 1]);
         end
         

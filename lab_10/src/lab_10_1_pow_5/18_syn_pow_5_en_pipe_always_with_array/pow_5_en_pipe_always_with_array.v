@@ -13,7 +13,7 @@ module pow_5_en_pipe_always_with_array
 );
 
     reg [w - 1:0] arg_reg [1:4];
-    reg [w - 1:0] pow   [2:5];
+    reg [w - 1:0] pow     [2:5];
     reg [    1:5] arg_vld_reg;
 
     integer i;
@@ -37,7 +37,7 @@ module pow_5_en_pipe_always_with_array
 
         if (clk_en)
         begin
-            arg_reg [1] <= n;
+            arg_reg [1] <= arg;
 
             for (i = 1; i <= 3; i = i + 1)
                 arg_reg [i + 1] <= arg_reg [i];
@@ -53,7 +53,7 @@ module pow_5_en_pipe_always_with_array
         for (i = 2; i <= 5; i = i + 1)
         begin
             res_vld [ 5 - i          ] = arg_vld_reg [i];
-            res     [(5 - i) * w +: w] = pow       [i];
+            res     [(5 - i) * w +: w] = pow         [i];
         end
 
 endmodule

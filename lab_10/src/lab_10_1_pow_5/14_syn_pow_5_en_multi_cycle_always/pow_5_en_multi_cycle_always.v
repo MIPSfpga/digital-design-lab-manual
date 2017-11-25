@@ -23,7 +23,7 @@ module pow_5_en_multi_cycle_always
     
     always @ (posedge clk)
         if (clk_en)
-            arg_q <= n;
+            arg_q <= arg;
 
     reg [4:0] shift;
 

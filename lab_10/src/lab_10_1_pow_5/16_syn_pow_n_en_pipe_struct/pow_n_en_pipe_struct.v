@@ -15,14 +15,14 @@ module pow_n_en_pipe_struct
 
     wire [w - 1:0] mul_d     [ 1 : n_stages     ];
 
-    wire           arg_vld_q   [ 0 : n_stages + 1 ];
-    wire [w - 1:0] arg_q       [ 0 : n_stages + 1 ];
+    wire           arg_vld_q [ 0 : n_stages + 1 ];
+    wire [w - 1:0] arg_q     [ 0 : n_stages + 1 ];
     wire [w - 1:0] mul_q     [ 2 : n_stages + 1 ];
 
     assign arg_vld_q [0] = arg_vld;
-    assign arg_q     [0] = n;
+    assign arg_q     [0] = arg;
     
-    assign mul_d   [1] = arg_q [1] * arg_q [1];
+    assign mul_d     [1] = arg_q [1] * arg_q [1];
 
     generate
     
@@ -44,14 +44,14 @@ module pow_n_en_pipe_struct
             reg_rst_n_en i_arg_vld
                 (clk, rst_n, clk_en, arg_vld_q [i], arg_vld_q [i + 1]);
 
-            reg_no_rst_en # (w) i_n
+            reg_no_rst_en # (w) i_arg
                 (clk, clk_en, arg_q [i], arg_q [i + 1]);
         end
         
         for (i = 2; i <= n_stages + 1; i = i + 1)
         begin : b_res
             assign res_vld [   n_stages + 1 - i            ] = arg_vld_q [i];
-            assign res     [ ( n_stages + 1 - i ) * w +: w ] = mul_q   [i];
+            assign res     [ ( n_stages + 1 - i ) * w +: w ] = mul_q     [i];
         end
     
     endgenerate

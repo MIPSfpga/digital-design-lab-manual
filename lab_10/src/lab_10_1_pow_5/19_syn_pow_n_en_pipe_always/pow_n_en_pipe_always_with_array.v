@@ -14,7 +14,7 @@ module pow_n_en_pipe_always
 );
 
     reg [ w - 1 :            0 ] arg_reg [ 1 : n_stages     ];
-    reg [ w - 1 :            0 ] pow   [ 2 : n_stages + 1 ];
+    reg [ w - 1 :            0 ] pow     [ 2 : n_stages + 1 ];
     reg [     1 : n_stages + 1 ] arg_vld_reg;
 
     integer i;
@@ -38,7 +38,7 @@ module pow_n_en_pipe_always
 
         if (clk_en)
         begin
-            arg_reg [1] <= n;
+            arg_reg [1] <= arg;
 
             for (i = 1; i <= n_stages - 1; i = i + 1)
                 arg_reg [i + 1] <= arg_reg [i];
