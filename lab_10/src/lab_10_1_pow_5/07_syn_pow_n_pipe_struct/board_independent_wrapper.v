@@ -14,7 +14,7 @@ module board_independent_wrapper
 
     wire [3:0] res_vld;
 
-    pow_5_pipe_struct_with_generate
+    pow_n_pipe_struct
     # (.w (8), .n_stages (4))
     i_pow_5
     (

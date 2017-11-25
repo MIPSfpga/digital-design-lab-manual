@@ -1,4 +1,4 @@
-module pow_5_en_pipe_struct_with_generate
+module pow_n_en_pipe_struct
 # (
     parameter w        = 8,
               n_stages = 4

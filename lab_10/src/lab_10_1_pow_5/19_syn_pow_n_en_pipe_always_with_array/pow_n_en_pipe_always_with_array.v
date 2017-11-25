@@ -1,4 +1,4 @@
-module pow_5_en_pipe_always_with_array_and_n_stages
+module pow_n_en_pipe_always
 # (
     parameter w        = 8,
               n_stages = 4 

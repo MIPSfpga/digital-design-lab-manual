@@ -14,7 +14,7 @@ module board_independent_wrapper
 
     wire [3:0] res_vld;
 
-    pow_5_pipe_always_with_array_and_n_stages
+    pow_n_pipe_always
     # (.w (8), .n_stages (4))
     i_pow_5
     (
