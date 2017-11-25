@@ -19,7 +19,7 @@ module pow_5_multi_cycle_always
             n_vld_q <= 1'b0;
         else
             n_vld_q <= n_vld;
-    
+
     always @ (posedge clk)
         n_q <= n;
 
