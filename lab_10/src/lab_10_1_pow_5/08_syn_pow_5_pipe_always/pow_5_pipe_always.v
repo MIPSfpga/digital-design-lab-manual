@@ -11,7 +11,7 @@ module pow_5_pipe_always
     output [w * 4 - 1:0] res
 );
 
-    reg [w - 1:0] n1, n2, n3, n4;
+    reg [w - 1:0] arg1, arg2, arg3, arg4;
     reg [w - 1:0] pow2, pow3, pow4, pow5;
     reg arg_vld_1, arg_vld_2, arg_vld_3, arg_vld_4, arg_vld_5;
 
@@ -35,15 +35,15 @@ module pow_5_pipe_always
 
     always @ (posedge clk)
     begin
-        n1 <= n;
-        n2 <= n1;
-        n3 <= n2;
-        n4 <= n3;
+        arg1 <= arg;
+        arg2 <= arg1;
+        arg3 <= arg2;
+        arg4 <= arg3;
 
-        pow2 <= n1 * n1;
-        pow3 <= pow2 * n2;
-        pow4 <= pow3 * n3;
-        pow5 <= pow4 * n4;
+        pow2 <= arg1 * arg1;
+        pow3 <= pow2 * arg2;
+        pow4 <= pow3 * arg3;
+        pow5 <= pow4 * arg4;
     end
 
     assign res_vld = { arg_vld_2 , arg_vld_3 , arg_vld_4 , arg_vld_5 };

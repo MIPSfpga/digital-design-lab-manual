@@ -12,7 +12,7 @@ module pow_n_pipe_always
     output reg [ w * n_stages - 1:0 ] res
 );
 
-    reg [ w - 1 :            0 ] n_reg [ 1 : n_stages     ];
+    reg [ w - 1 :            0 ] arg_reg [ 1 : n_stages     ];
     reg [ w - 1 :            0 ] pow   [ 2 : n_stages + 1 ];
     reg [     1 : n_stages + 1 ] arg_vld_reg;
 
@@ -35,15 +35,15 @@ module pow_n_pipe_always
 
     always @ (posedge clk)
     begin
-        n_reg [1] <= n;
+        arg_reg [1] <= n;
 
         for (i = 1; i <= n_stages - 1; i = i + 1)
-            n_reg [i + 1] <= n_reg [i];
+            arg_reg [i + 1] <= arg_reg [i];
 
-        pow [2] <= n_reg [1] * n_reg [1];
+        pow [2] <= arg_reg [1] * arg_reg [1];
 
         for (i = 2; i <= n_stages; i = i + 1)
-            pow [i + 1] <= pow [i] * n_reg [i];
+            pow [i + 1] <= pow [i] * arg_reg [i];
     end
 
     always @*

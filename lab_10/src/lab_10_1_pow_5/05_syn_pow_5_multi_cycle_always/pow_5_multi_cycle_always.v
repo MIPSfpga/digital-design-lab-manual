@@ -21,7 +21,7 @@ module pow_5_multi_cycle_always
             arg_vld_q <= arg_vld;
     
     always @ (posedge clk)
-        arg_q <= n;
+        arg_q <= arg;
 
     reg [4:0] shift;
 
