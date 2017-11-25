@@ -7,7 +7,7 @@ module pow_n_pipe_always
     input                             clk,
     input                             rst_n,
     input                             arg_vld,
-    input      [ w            - 1:0 ] n,
+    input      [ w            - 1:0 ] arg,
     output reg [     n_stages - 1:0 ] res_vld,
     output reg [ w * n_stages - 1:0 ] res
 );

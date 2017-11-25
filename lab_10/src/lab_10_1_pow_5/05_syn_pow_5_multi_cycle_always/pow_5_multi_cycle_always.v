@@ -6,13 +6,13 @@ module pow_5_multi_cycle_always
     input            clk,
     input            rst_n,
     input            arg_vld,
-    input  [w - 1:0] n,
+    input  [w - 1:0] arg,
     output           res_vld,
     output [w - 1:0] res
 );
 
     reg           arg_vld_q;
-    reg [w - 1:0] n_q;
+    reg [w - 1:0] arg_q;
 
     always @ (posedge clk or negedge rst_n)
         if (! rst_n)
@@ -21,7 +21,7 @@ module pow_5_multi_cycle_always
             arg_vld_q <= arg_vld;
     
     always @ (posedge clk)
-        n_q <= n;
+        arg_q <= n;
 
     reg [4:0] shift;
 
@@ -39,9 +39,9 @@ module pow_5_multi_cycle_always
 
     always @(posedge clk)
         if (arg_vld_q)
-            mul <= n_q;
+            mul <= arg_q;
         else
-            mul <= mul * n_q;
+            mul <= mul * arg_q;
 
     assign res = mul;
 

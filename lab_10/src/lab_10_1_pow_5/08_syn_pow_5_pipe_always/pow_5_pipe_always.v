@@ -6,7 +6,7 @@ module pow_5_pipe_always
     input                clk,
     input                rst_n,
     input                arg_vld,
-    input  [w     - 1:0] n,
+    input  [w     - 1:0] arg,
     output [        3:0] res_vld,
     output [w * 4 - 1:0] res
 );

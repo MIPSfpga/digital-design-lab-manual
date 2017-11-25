@@ -6,13 +6,13 @@ module pow_5_single_cycle_always
     input                clk,
     input                rst_n,
     input                arg_vld,
-    input      [w - 1:0] n,
+    input      [w - 1:0] arg,
     output reg           res_vld,
     output reg [w - 1:0] res
 );
 
     reg           arg_vld_q;
-    reg [w - 1:0] n_q;
+    reg [w - 1:0] arg_q;
 
     always @ (posedge clk or negedge rst_n)
         if (! rst_n)
@@ -21,10 +21,10 @@ module pow_5_single_cycle_always
             arg_vld_q <= arg_vld;
     
     always @ (posedge clk)
-        n_q <= n;
+        arg_q <= n;
 
     wire           res_vld_d = arg_vld_q;
-    wire [w - 1:0] res_d     = n_q  * n_q * n_q * n_q * n_q;
+    wire [w - 1:0] res_d     = arg_q  * arg_q * arg_q * arg_q * arg_q;
 
     always @ (posedge clk or negedge rst_n)
         if (! rst_n)
