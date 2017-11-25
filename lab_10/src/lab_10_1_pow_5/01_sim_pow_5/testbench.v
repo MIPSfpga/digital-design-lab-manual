@@ -15,9 +15,9 @@ module testbench
     reg clk;
     reg rst_n;
     reg clk_en;
-    reg n_vld;
+    reg arg_vld;
 
-    reg [ w - 1:0 ] n;
+    reg [ w - 1:0 ] arg;
 
     wire                        res_vld_pow_5_single_cycle_struct;
     wire                        res_vld_pow_5_single_cycle_always;
@@ -79,10 +79,10 @@ module testbench
     # (.w (w))
     i_pow_5_single_cycle_struct
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_single_cycle_struct ),
         .res     ( res_pow_5_single_cycle_struct     )
     );
@@ -91,10 +91,10 @@ module testbench
     # (.w (w))
     i_pow_5_single_cycle_always
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_single_cycle_always ),
         .res     ( res_pow_5_single_cycle_always     )
     );
@@ -103,10 +103,10 @@ module testbench
     # (.w (w))
     i_pow_5_multi_cycle_struct
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_multi_cycle_struct ),
         .res     ( res_pow_5_multi_cycle_struct     )
     );
@@ -115,10 +115,10 @@ module testbench
     # (.w (w))
     i_pow_5_multi_cycle_always
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_multi_cycle_always ),
         .res     ( res_pow_5_multi_cycle_always     )
     );
@@ -127,10 +127,10 @@ module testbench
     # (.w (w))
     i_pow_5_pipe_struct
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_pipe_struct ),
         .res     ( res_pow_5_pipe_struct     )
     );
@@ -139,10 +139,10 @@ module testbench
     # (.w (w), .n_stages (4))
     i_pow_n_pipe_struct_4
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_pipe_struct_4 ),
         .res     ( res_pow_n_pipe_struct_4     )
     );
@@ -151,10 +151,10 @@ module testbench
     # (.w (w))
     i_pow_5_pipe_always
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_pipe_always ),
         .res     ( res_pow_5_pipe_always     )
     );
@@ -163,10 +163,10 @@ module testbench
     # (.w (w))
     i_pow_5_pipe_always_with_array
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_pipe_always_with_array ),
         .res     ( res_pow_5_pipe_always_with_array     )
     );
@@ -175,10 +175,10 @@ module testbench
     # (.w (w), .n_stages (4))
     i_pow_n_pipe_always_4
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_pipe_always_4 ),
         .res     ( res_pow_n_pipe_always_4     )
     );
@@ -187,10 +187,10 @@ module testbench
     # (.w (w), .n_stages (5))
     i_pow_n_pipe_struct_5
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_pipe_struct_5 ),
         .res     ( res_pow_n_pipe_struct_5     )
     );
@@ -199,10 +199,10 @@ module testbench
     # (.w (w), .n_stages (5))
     i_pow_n_pipe_always_5
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_pipe_always_5 ),
         .res     ( res_pow_n_pipe_always_5     )
     );
@@ -213,11 +213,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_single_cycle_struct
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_single_cycle_struct ),
         .res     ( res_pow_5_en_single_cycle_struct     )
     );
@@ -226,11 +226,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_single_cycle_always
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_single_cycle_always ),
         .res     ( res_pow_5_en_single_cycle_always     )
     );
@@ -239,11 +239,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_multi_cycle_struct
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_multi_cycle_struct ),
         .res     ( res_pow_5_en_multi_cycle_struct     )
     );
@@ -252,11 +252,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_multi_cycle_always
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_multi_cycle_always ),
         .res     ( res_pow_5_en_multi_cycle_always     )
     );
@@ -265,11 +265,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_pipe_struct
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_pipe_struct ),
         .res     ( res_pow_5_en_pipe_struct     )
     );
@@ -278,11 +278,11 @@ module testbench
     # (.w (w), .n_stages (4))
     i_pow_n_en_pipe_struct_4
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_en_pipe_struct_4 ),
         .res     ( res_pow_n_en_pipe_struct_4     )
     );
@@ -291,11 +291,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_pipe_always
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_pipe_always ),
         .res     ( res_pow_5_en_pipe_always     )
     );
@@ -304,11 +304,11 @@ module testbench
     # (.w (w))
     i_pow_5_en_pipe_always_with_array
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_en_pipe_always_with_array ),
         .res     ( res_pow_5_en_pipe_always_with_array     )
     );
@@ -317,11 +317,11 @@ module testbench
     # (.w (w), .n_stages (4))
     i_pow_n_en_pipe_always_4
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_en_pipe_always_4 ),
         .res     ( res_pow_n_en_pipe_always_4     )
     );
@@ -330,11 +330,11 @@ module testbench
     # (.w (w), .n_stages (5))
     i_pow_n_en_pipe_struct_5
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_en_pipe_struct_5 ),
         .res     ( res_pow_n_en_pipe_struct_5     )
     );
@@ -343,11 +343,11 @@ module testbench
     # (.w (w), .n_stages (5))
     i_pow_n_en_pipe_always_5
     (
-        .clk     ( clk    ),
-        .rst_n   ( rst_n  ),
-        .clk_en  ( clk_en ),
-        .n_vld   ( n_vld  ),
-        .n       ( n      ),
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .clk_en  ( clk_en  ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
         .res_vld ( res_vld_pow_n_en_pipe_always_5 ),
         .res     ( res_pow_n_en_pipe_always_5     )
     );
@@ -368,8 +368,8 @@ module testbench
  
     initial
     begin
-        clk_en <= 1'b1;
-        n_vld  <= 1'b0;
+        clk_en  <= 1'b1;
+        arg_vld <= 1'b0;
 
         repeat (2) @ (posedge clk);
         rst_n <= 0;
@@ -394,12 +394,12 @@ module testbench
 
         repeat (10) @ (posedge clk);
 
-        n     <= 3;
-        n_vld <= 1;
+        arg     <= 3;
+        arg_vld <= 1;
 
         @ (posedge clk);
 
-        n_vld <= 0;
+        arg_vld <= 0;
 
         repeat (10) @ (posedge clk);
 
@@ -407,8 +407,8 @@ module testbench
 
         for (i = 0; i < 50; i = i + 1)
         begin
-            n     <= i & 7;
-            n_vld <= (i == 0 || res_vld_pow_5_en_multi_cycle_struct);
+            arg     <= i & 7;
+            arg_vld <= (i == 0 || res_vld_pow_5_en_multi_cycle_struct);
 
             @ (posedge clk);
         end
@@ -417,8 +417,8 @@ module testbench
 
         for (i = 0; i < 50; i = i + 1)
         begin
-            n     <= i & 7;
-            n_vld <= 1;
+            arg     <= i & 7;
+            arg_vld <= 1;
 
             @ (posedge clk);
         end

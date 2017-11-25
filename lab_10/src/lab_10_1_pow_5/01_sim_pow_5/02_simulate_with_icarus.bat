@@ -7,7 +7,7 @@ cd sim
 
 rem compile verilog files for simulation
 
-iverilog -s testbench ../../common/reg*.v ../../*/pow_5_*.v ../testbench.v
+iverilog -s testbench ../../common/reg*.v ../../*/pow*.v ../testbench.v
 
 rem run the simulation and finish on $stop
 

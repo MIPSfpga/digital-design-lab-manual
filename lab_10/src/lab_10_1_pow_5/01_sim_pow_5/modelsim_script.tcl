@@ -6,7 +6,7 @@ vlib work
 # compile all the Verilog sources
 
 vlog ../../common/reg*.v
-vlog ../../*/pow_5_*.v
+vlog ../../*/pow*.v
 vlog ../testbench.v
 
 # open the testbench module for simulation
@@ -19,8 +19,8 @@ vsim work.testbench
 
 add wave -radix bin sim:/testbench/clk
 add wave -radix bin sim:/testbench/rst_n
-add wave -radix bin sim:/testbench/n_vld
-add wave -radix hex sim:/testbench/n
+add wave -radix bin sim:/testbench/arg_vld
+add wave -radix hex sim:/testbench/arg
 add wave -radix bin sim:/testbench/res_vld_pow_5_single_cycle_struct
 add wave -radix hex sim:/testbench/res_pow_5_single_cycle_struct
 add wave -radix bin sim:/testbench/res_vld_pow_5_en_single_cycle_struct

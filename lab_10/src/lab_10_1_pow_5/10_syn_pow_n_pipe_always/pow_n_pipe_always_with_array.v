@@ -6,7 +6,7 @@ module pow_n_pipe_always
 (
     input                             clk,
     input                             rst_n,
-    input                             n_vld,
+    input                             arg_vld,
     input      [ w            - 1:0 ] n,
     output reg [     n_stages - 1:0 ] res_vld,
     output reg [ w * n_stages - 1:0 ] res
@@ -14,7 +14,7 @@ module pow_n_pipe_always
 
     reg [ w - 1 :            0 ] n_reg [ 1 : n_stages     ];
     reg [ w - 1 :            0 ] pow   [ 2 : n_stages + 1 ];
-    reg [     1 : n_stages + 1 ] n_vld_reg;
+    reg [     1 : n_stages + 1 ] arg_vld_reg;
 
     integer i;
 
@@ -23,14 +23,14 @@ module pow_n_pipe_always
         if (! rst_n)
         begin
             for (i = 1; i <= n_stages + 1; i = i + 1)
-                n_vld_reg [i] <= 1'b0;
+                arg_vld_reg [i] <= 1'b0;
         end
         else
         begin
-            n_vld_reg [1] <= n_vld;
+            arg_vld_reg [1] <= arg_vld;
 
             for (i = 1; i <= n_stages; i = i + 1)
-                n_vld_reg [i + 1] <= n_vld_reg [i];
+                arg_vld_reg [i + 1] <= arg_vld_reg [i];
         end
 
     always @ (posedge clk)
@@ -50,7 +50,7 @@ module pow_n_pipe_always
 
         for (i = 2; i <= n_stages + 1; i = i + 1)
         begin
-            res_vld [  n_stages + 1 - i           ] = n_vld_reg [i];
+            res_vld [  n_stages + 1 - i           ] = arg_vld_reg [i];
             res     [ (n_stages + 1 - i) * w +: w ] = pow       [i];
         end
 

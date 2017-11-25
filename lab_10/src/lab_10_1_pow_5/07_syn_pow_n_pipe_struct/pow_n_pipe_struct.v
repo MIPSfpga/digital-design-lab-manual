@@ -6,7 +6,7 @@ module pow_n_pipe_struct
 (
     input                       clk,
     input                       rst_n,
-    input                       n_vld,
+    input                       arg_vld,
     input  [w            - 1:0] n,
     output [    n_stages - 1:0] res_vld,
     output [w * n_stages - 1:0] res
@@ -14,11 +14,11 @@ module pow_n_pipe_struct
 
     wire [w - 1:0] mul_d     [ 1 : n_stages     ];
 
-    wire           n_vld_q   [ 0 : n_stages + 1 ];
+    wire           arg_vld_q   [ 0 : n_stages + 1 ];
     wire [w - 1:0] n_q       [ 0 : n_stages + 1 ];
     wire [w - 1:0] mul_q     [ 2 : n_stages + 1 ];
 
-    assign n_vld_q [0] = n_vld;
+    assign arg_vld_q [0] = arg_vld;
     assign n_q     [0] = n;
     
     assign mul_d   [1] = n_q [1] * n_q [1];
@@ -40,8 +40,8 @@ module pow_n_pipe_struct
 
         for (i = 0; i <= n_stages; i = i + 1)
         begin : b_regs
-            reg_rst_n i_n_vld
-                (clk, rst_n, n_vld_q [i], n_vld_q [i + 1]);
+            reg_rst_n i_arg_vld
+                (clk, rst_n, arg_vld_q [i], arg_vld_q [i + 1]);
 
             reg_no_rst # (w) i_n
                 (clk, n_q [i], n_q [i + 1]);
@@ -49,7 +49,7 @@ module pow_n_pipe_struct
         
         for (i = 2; i <= n_stages + 1; i = i + 1)
         begin : b_res
-            assign res_vld [   n_stages + 1 - i            ] = n_vld_q [i];
+            assign res_vld [   n_stages + 1 - i            ] = arg_vld_q [i];
             assign res     [ ( n_stages + 1 - i ) * w +: w ] = mul_q   [i];
         end
     

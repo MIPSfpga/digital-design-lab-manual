@@ -20,8 +20,8 @@ module board_independent_wrapper
     (
         .clk     ( slow_clk    ),
         .rst_n   ( rst_n       ),
-        .n_vld   ( key [0]     ),
-        .n       ( sw          ),
+        .arg_vld ( key [0]     ),
+        .arg     ( sw          ),
         .res_vld ( res_vld     ),
         .res     ( disp [31:0] )
     );

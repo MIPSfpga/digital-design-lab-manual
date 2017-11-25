@@ -5,7 +5,7 @@ module pow_5_pipe_always
 (
     input                clk,
     input                rst_n,
-    input                n_vld,
+    input                arg_vld,
     input  [w     - 1:0] n,
     output [        3:0] res_vld,
     output [w * 4 - 1:0] res
@@ -13,24 +13,24 @@ module pow_5_pipe_always
 
     reg [w - 1:0] n1, n2, n3, n4;
     reg [w - 1:0] pow2, pow3, pow4, pow5;
-    reg n_vld_1, n_vld_2, n_vld_3, n_vld_4, n_vld_5;
+    reg arg_vld_1, arg_vld_2, arg_vld_3, arg_vld_4, arg_vld_5;
 
     always @ (posedge clk or negedge rst_n)
         if (! rst_n)
         begin
-            n_vld_1 <= 1'b0;
-            n_vld_2 <= 1'b0;
-            n_vld_3 <= 1'b0;
-            n_vld_4 <= 1'b0;
-            n_vld_5 <= 1'b0;
+            arg_vld_1 <= 1'b0;
+            arg_vld_2 <= 1'b0;
+            arg_vld_3 <= 1'b0;
+            arg_vld_4 <= 1'b0;
+            arg_vld_5 <= 1'b0;
         end
         else
         begin
-            n_vld_1 <= n_vld;
-            n_vld_2 <= n_vld_1;
-            n_vld_3 <= n_vld_2;
-            n_vld_4 <= n_vld_3;
-            n_vld_5 <= n_vld_4;
+            arg_vld_1 <= arg_vld;
+            arg_vld_2 <= arg_vld_1;
+            arg_vld_3 <= arg_vld_2;
+            arg_vld_4 <= arg_vld_3;
+            arg_vld_5 <= arg_vld_4;
         end
 
     always @ (posedge clk)
@@ -46,7 +46,7 @@ module pow_5_pipe_always
         pow5 <= pow4 * n4;
     end
 
-    assign res_vld = { n_vld_2 , n_vld_3 , n_vld_4 , n_vld_5 };
+    assign res_vld = { arg_vld_2 , arg_vld_3 , arg_vld_4 , arg_vld_5 };
     assign res     = { pow2    , pow3    , pow4    , pow5    };
 
 endmodule
