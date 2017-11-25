@@ -1,7 +1,6 @@
 module pow_n_pipe_always
 # (
-    parameter w        = 8,
-              n_stages = 4 
+    parameter w = 8, n = 5
 )
 (
     input                             clk,

@@ -15,7 +15,7 @@ module board_independent_wrapper
     wire [3:0] res_vld;
 
     pow_n_en_pipe_always
-    # (.w (8), .n_stages (4))
+    # (.w (8), .n (5))
     i_pow_5
     (
         .clk     ( fast_clk    ),

@@ -2,8 +2,8 @@
 
 module testbench
 # (
-    parameter w        = 8,
-              n_stages = 4
+    parameter w = 8,
+              n = 5
 );
 
     //------------------------------------------------------------------------
@@ -19,55 +19,55 @@ module testbench
 
     reg [ w - 1:0 ] arg;
 
-    wire                        res_vld_pow_5_single_cycle_struct;
-    wire                        res_vld_pow_5_single_cycle_always;
-    wire                        res_vld_pow_5_multi_cycle_struct;
-    wire                        res_vld_pow_5_multi_cycle_always;
-    wire [ n_stages     - 1:0 ] res_vld_pow_5_pipe_struct;
-    wire [ 4            - 1:0 ] res_vld_pow_n_pipe_struct_4;
-    wire [ n_stages     - 1:0 ] res_vld_pow_5_pipe_always;
-    wire [ n_stages     - 1:0 ] res_vld_pow_5_pipe_always_with_array;
-    wire [ 4            - 1:0 ] res_vld_pow_n_pipe_always_4;
-    wire [ 5            - 1:0 ] res_vld_pow_n_pipe_struct_5;
-    wire [ 5            - 1:0 ] res_vld_pow_n_pipe_always_5;
+    wire                 res_vld_pow_5_single_cycle_struct;
+    wire                 res_vld_pow_5_single_cycle_always;
+    wire                 res_vld_pow_5_multi_cycle_struct;
+    wire                 res_vld_pow_5_multi_cycle_always;
+    wire [ n     - 1:0 ] res_vld_pow_5_pipe_struct;
+    wire [ 4     - 1:0 ] res_vld_pow_n_pipe_struct_4;
+    wire [ n     - 1:0 ] res_vld_pow_5_pipe_always;
+    wire [ n     - 1:0 ] res_vld_pow_5_pipe_always_with_array;
+    wire [ 4     - 1:0 ] res_vld_pow_n_pipe_always_4;
+    wire [ 5     - 1:0 ] res_vld_pow_n_pipe_struct_5;
+    wire [ 5     - 1:0 ] res_vld_pow_n_pipe_always_5;
 
-    wire [ w            - 1:0 ] res_pow_5_single_cycle_struct;
-    wire [ w            - 1:0 ] res_pow_5_single_cycle_always;
-    wire [ w            - 1:0 ] res_pow_5_multi_cycle_struct;
-    wire [ w            - 1:0 ] res_pow_5_multi_cycle_always;
-    wire [ w * n_stages - 1:0 ] res_pow_5_pipe_struct;
-    wire [ w * 4        - 1:0 ] res_pow_n_pipe_struct_4;
-    wire [ w * n_stages - 1:0 ] res_pow_5_pipe_always;
-    wire [ w * n_stages - 1:0 ] res_pow_5_pipe_always_with_array;
-    wire [ w * 4        - 1:0 ] res_pow_n_pipe_always_4;
-    wire [ w * 5        - 1:0 ] res_pow_n_pipe_struct_5;
-    wire [ w * 5        - 1:0 ] res_pow_n_pipe_always_5;
+    wire [ w     - 1:0 ] res_pow_5_single_cycle_struct;
+    wire [ w     - 1:0 ] res_pow_5_single_cycle_always;
+    wire [ w     - 1:0 ] res_pow_5_multi_cycle_struct;
+    wire [ w     - 1:0 ] res_pow_5_multi_cycle_always;
+    wire [ n * w - 1:0 ] res_pow_5_pipe_struct;
+    wire [ 4 * w - 1:0 ] res_pow_n_pipe_struct_4;
+    wire [ n * w - 1:0 ] res_pow_5_pipe_always;
+    wire [ n * w - 1:0 ] res_pow_5_pipe_always_with_array;
+    wire [ 4 * w - 1:0 ] res_pow_n_pipe_always_4;
+    wire [ 5 * w - 1:0 ] res_pow_n_pipe_struct_5;
+    wire [ 5 * w - 1:0 ] res_pow_n_pipe_always_5;
 
     //------------------------------------------------------------------------
 
-    wire                        res_vld_pow_5_en_single_cycle_struct;
-    wire                        res_vld_pow_5_en_single_cycle_always;
-    wire                        res_vld_pow_5_en_multi_cycle_struct;
-    wire                        res_vld_pow_5_en_multi_cycle_always;
-    wire [ n_stages     - 1:0 ] res_vld_pow_5_en_pipe_struct;
-    wire [ 4            - 1:0 ] res_vld_pow_n_en_pipe_struct_4;
-    wire [ n_stages     - 1:0 ] res_vld_pow_5_en_pipe_always;
-    wire [ n_stages     - 1:0 ] res_vld_pow_5_en_pipe_always_with_array;
-    wire [ 4            - 1:0 ] res_vld_pow_n_en_pipe_always_4;
-    wire [ 5            - 1:0 ] res_vld_pow_n_en_pipe_struct_5;
-    wire [ 5            - 1:0 ] res_vld_pow_n_en_pipe_always_5;
+    wire                 res_vld_pow_5_en_single_cycle_struct;
+    wire                 res_vld_pow_5_en_single_cycle_always;
+    wire                 res_vld_pow_5_en_multi_cycle_struct;
+    wire                 res_vld_pow_5_en_multi_cycle_always;
+    wire [ n     - 1:0 ] res_vld_pow_5_en_pipe_struct;
+    wire [ 4     - 1:0 ] res_vld_pow_n_en_pipe_struct_4;
+    wire [ n     - 1:0 ] res_vld_pow_5_en_pipe_always;
+    wire [ n     - 1:0 ] res_vld_pow_5_en_pipe_always_with_array;
+    wire [ 4     - 1:0 ] res_vld_pow_n_en_pipe_always_4;
+    wire [ 5     - 1:0 ] res_vld_pow_n_en_pipe_struct_5;
+    wire [ 5     - 1:0 ] res_vld_pow_n_en_pipe_always_5;
 
-    wire [ w            - 1:0 ] res_pow_5_en_single_cycle_struct;
-    wire [ w            - 1:0 ] res_pow_5_en_single_cycle_always;
-    wire [ w            - 1:0 ] res_pow_5_en_multi_cycle_struct;
-    wire [ w            - 1:0 ] res_pow_5_en_multi_cycle_always;
-    wire [ w * n_stages - 1:0 ] res_pow_5_en_pipe_struct;
-    wire [ w * 4        - 1:0 ] res_pow_n_en_pipe_struct_4;
-    wire [ w * n_stages - 1:0 ] res_pow_5_en_pipe_always;
-    wire [ w * n_stages - 1:0 ] res_pow_5_en_pipe_always_with_array;
-    wire [ w * 4        - 1:0 ] res_pow_n_en_pipe_always_4;
-    wire [ w * 5        - 1:0 ] res_pow_n_en_pipe_struct_5;
-    wire [ w * 5        - 1:0 ] res_pow_n_en_pipe_always_5;
+    wire [ w     - 1:0 ] res_pow_5_en_single_cycle_struct;
+    wire [ w     - 1:0 ] res_pow_5_en_single_cycle_always;
+    wire [ w     - 1:0 ] res_pow_5_en_multi_cycle_struct;
+    wire [ w     - 1:0 ] res_pow_5_en_multi_cycle_always;
+    wire [ n * w - 1:0 ] res_pow_5_en_pipe_struct;
+    wire [ 4 * w - 1:0 ] res_pow_n_en_pipe_struct_4;
+    wire [ n * w - 1:0 ] res_pow_5_en_pipe_always;
+    wire [ n * w - 1:0 ] res_pow_5_en_pipe_always_with_array;
+    wire [ 4 * w - 1:0 ] res_pow_n_en_pipe_always_4;
+    wire [ 5 * w - 1:0 ] res_pow_n_en_pipe_struct_5;
+    wire [ 5 * w - 1:0 ] res_pow_n_en_pipe_always_5;
 
     //------------------------------------------------------------------------
     //
@@ -136,7 +136,7 @@ module testbench
     );
 
       pow_n_pipe_struct
-    # (.w (w), .n_stages (4))
+    # (.w (w), .n (5))
     i_pow_n_pipe_struct_4
     (
         .clk     ( clk     ),
@@ -172,7 +172,7 @@ module testbench
     );
       
       pow_n_pipe_always
-    # (.w (w), .n_stages (4))
+    # (.w (w), .n (5))
     i_pow_n_pipe_always_4
     (
         .clk     ( clk     ),
@@ -184,7 +184,7 @@ module testbench
     );
 
       pow_n_pipe_struct
-    # (.w (w), .n_stages (5))
+    # (.w (w), .n (6))
     i_pow_n_pipe_struct_5
     (
         .clk     ( clk     ),
@@ -196,7 +196,7 @@ module testbench
     );
 
       pow_n_pipe_always
-    # (.w (w), .n_stages (5))
+    # (.w (w), .n (6))
     i_pow_n_pipe_always_5
     (
         .clk     ( clk     ),
@@ -275,7 +275,7 @@ module testbench
     );
 
       pow_n_en_pipe_struct
-    # (.w (w), .n_stages (4))
+    # (.w (w), .n (5))
     i_pow_n_en_pipe_struct_4
     (
         .clk     ( clk     ),
@@ -314,7 +314,7 @@ module testbench
     );
       
       pow_n_en_pipe_always
-    # (.w (w), .n_stages (4))
+    # (.w (w), .n (5))
     i_pow_n_en_pipe_always_4
     (
         .clk     ( clk     ),
@@ -327,7 +327,7 @@ module testbench
     );
 
       pow_n_en_pipe_struct
-    # (.w (w), .n_stages (5))
+    # (.w (w), .n (6))
     i_pow_n_en_pipe_struct_5
     (
         .clk     ( clk     ),
@@ -340,7 +340,7 @@ module testbench
     );
 
       pow_n_en_pipe_always
-    # (.w (w), .n_stages (5))
+    # (.w (w), .n (6))
     i_pow_n_en_pipe_always_5
     (
         .clk     ( clk     ),

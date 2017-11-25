@@ -1,7 +1,6 @@
 module pow_n_en_pipe_struct
 # (
-    parameter w        = 8,
-              n_stages = 4
+    parameter w = 8, n = 5
 )
 (
     input                       clk,

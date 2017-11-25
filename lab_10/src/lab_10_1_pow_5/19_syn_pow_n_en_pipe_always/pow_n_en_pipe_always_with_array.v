@@ -1,7 +1,6 @@
 module pow_n_en_pipe_always
 # (
-    parameter w        = 8,
-              n_stages = 4 
+    parameter w = 8, n = 5
 )
 (
     input                             clk,
@@ -54,7 +53,7 @@ module pow_n_en_pipe_always
         for (i = 2; i <= n_stages + 1; i = i + 1)
         begin
             res_vld [  n_stages + 1 - i           ] = arg_vld_reg [i];
-            res     [ (n_stages + 1 - i) * w +: w ] = pow       [i];
+            res     [ (n_stages + 1 - i) * w +: w ] = pow         [i];
         end
 
 endmodule
