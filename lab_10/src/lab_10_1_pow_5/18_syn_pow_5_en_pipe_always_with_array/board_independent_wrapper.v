@@ -12,7 +12,8 @@ module board_independent_wrapper
     output [ 7:0] disp_dot
 );
 
-    wire [3:0] res_vld;
+    wire [ 4:0] res_vld;
+    wire [39:0] res;
 
     pow_5_en_pipe_always_with_array
     # (.w (8))
@@ -24,7 +25,7 @@ module board_independent_wrapper
         .arg_vld ( key [0]     ),
         .arg     ( sw          ),
         .res_vld ( res_vld     ),
-        .res     ( disp [31:0] )
+        .res     ( res         )
     );
 
     assign disp_en  =
@@ -34,6 +35,8 @@ module board_independent_wrapper
         res_vld [1], res_vld [1],
         res_vld [0], res_vld [0]
     };
+
+    assign disp = res [31:0];
 
     assign disp_dot = 8'b0;
 

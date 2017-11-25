@@ -12,18 +12,19 @@ module board_independent_wrapper
     output [ 7:0] disp_dot
 );
 
-    wire [3:0] res_vld;
+    wire [ 4:0] res_vld;
+    wire [39:0] res;
 
     pow_n_pipe_always
     # (.w (8), .n (5))
     i_pow_5
     (
-        .clk     ( slow_clk    ),
-        .rst_n   ( rst_n       ),
-        .arg_vld ( key [0]     ),
-        .arg     ( sw          ),
-        .res_vld ( res_vld     ),
-        .res     ( disp [31:0] )
+        .clk     ( slow_clk ),
+        .rst_n   ( rst_n    ),
+        .arg_vld ( key [0]  ),
+        .arg     ( sw       ),
+        .res_vld ( res_vld  ),
+        .res     ( res      )
     );
 
     assign disp_en  =
@@ -33,6 +34,8 @@ module board_independent_wrapper
         res_vld [1], res_vld [1],
         res_vld [0], res_vld [0]
     };
+
+    assign disp = res [31:0];
 
     assign disp_dot = 8'b0;
 

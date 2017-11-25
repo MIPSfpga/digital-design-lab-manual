@@ -29,14 +29,14 @@ add wave -radix bin sim:/testbench/res_vld_pow_5_multi_cycle_struct
 add wave -radix hex sim:/testbench/res_pow_5_multi_cycle_struct
 add wave -radix bin sim:/testbench/res_vld_pow_5_en_multi_cycle_struct
 add wave -radix hex sim:/testbench/res_pow_5_en_multi_cycle_struct
-add wave -radix bin {sim:/testbench/res_vld_pow_n_pipe_struct_4[0]}
-add wave -radix hex {sim:/testbench/res_pow_n_pipe_struct_4[7:0]}
-add wave -radix bin {sim:/testbench/res_vld_pow_n_en_pipe_struct_4[0]}
-add wave -radix hex {sim:/testbench/res_pow_n_en_pipe_struct_4[7:0]}
 add wave -radix bin {sim:/testbench/res_vld_pow_n_pipe_struct_5[0]}
 add wave -radix hex {sim:/testbench/res_pow_n_pipe_struct_5[7:0]}
 add wave -radix bin {sim:/testbench/res_vld_pow_n_en_pipe_struct_5[0]}
 add wave -radix hex {sim:/testbench/res_pow_n_en_pipe_struct_5[7:0]}
+add wave -radix bin {sim:/testbench/res_vld_pow_n_pipe_struct_6[0]}
+add wave -radix hex {sim:/testbench/res_pow_n_pipe_struct_6[7:0]}
+add wave -radix bin {sim:/testbench/res_vld_pow_n_en_pipe_struct_6[0]}
+add wave -radix hex {sim:/testbench/res_pow_n_en_pipe_struct_6[7:0]}
 
 # run the simulation
 
