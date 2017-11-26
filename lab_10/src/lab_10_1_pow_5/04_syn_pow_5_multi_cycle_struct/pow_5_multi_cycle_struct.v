@@ -24,6 +24,9 @@ module pow_5_multi_cycle_struct
     
     assign res_vld = shift_q [0];
 
+    // TODO: save cycle
+    // TODO: reduce switching
+
     wire [w - 1:0] mul_q;
     wire [w - 1:0] mul_d = arg_vld_q ? arg_q : mul_q * arg_q;
 
