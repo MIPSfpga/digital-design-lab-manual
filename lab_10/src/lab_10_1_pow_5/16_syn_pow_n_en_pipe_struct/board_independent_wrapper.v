@@ -1,3 +1,5 @@
+`include "pow_n_en_pipe_struct.v"
+
 module board_independent_wrapper
 (
     input         fast_clk,

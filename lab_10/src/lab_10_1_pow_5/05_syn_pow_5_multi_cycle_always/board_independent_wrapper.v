@@ -1,3 +1,5 @@
+`include "pow_5_multi_cycle_always.v"
+
 module board_independent_wrapper
 (
     input         fast_clk,

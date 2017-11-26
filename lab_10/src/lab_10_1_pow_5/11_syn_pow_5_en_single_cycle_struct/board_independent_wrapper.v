@@ -1,3 +1,5 @@
+`include "pow_5_en_single_cycle_struct.v"
+
 module board_independent_wrapper
 (
     input         fast_clk,
