@@ -21,6 +21,7 @@ module testbench
 
     wire                 res_vld_pow_5_single_cycle_struct;
     wire                 res_vld_pow_5_single_cycle_always;
+    wire                 res_vld_pow_5_multi_cycle_struct_todo;
     wire                 res_vld_pow_5_multi_cycle_struct;
     wire                 res_vld_pow_5_multi_cycle_always;
     wire [ n     - 1:0 ] res_vld_pow_5_pipe_struct;
@@ -33,6 +34,7 @@ module testbench
 
     wire [ w     - 1:0 ] res_pow_5_single_cycle_struct;
     wire [ w     - 1:0 ] res_pow_5_single_cycle_always;
+    wire [ w     - 1:0 ] res_pow_5_multi_cycle_struct_todo;
     wire [ w     - 1:0 ] res_pow_5_multi_cycle_struct;
     wire [ w     - 1:0 ] res_pow_5_multi_cycle_always;
     wire [ n * w - 1:0 ] res_pow_5_pipe_struct;
@@ -97,6 +99,18 @@ module testbench
         .arg     ( arg     ),
         .res_vld ( res_vld_pow_5_single_cycle_always ),
         .res     ( res_pow_5_single_cycle_always     )
+    );
+
+      pow_5_multi_cycle_struct_todo
+    # (.w (w))
+    i_pow_5_multi_cycle_struct_todo
+    (
+        .clk     ( clk     ),
+        .rst_n   ( rst_n   ),
+        .arg_vld ( arg_vld ),
+        .arg     ( arg     ),
+        .res_vld ( res_vld_pow_5_multi_cycle_struct_todo ),
+        .res     ( res_pow_5_multi_cycle_struct_todo     )
     );
 
       pow_5_multi_cycle_struct

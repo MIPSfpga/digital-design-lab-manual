@@ -21,28 +21,30 @@ module pow_5_multi_cycle_always
             arg_vld_q <= arg_vld;
     
     always @ (posedge clk)
-        arg_q <= arg;
+        if (arg_vld)
+            arg_q <= arg;
 
-    reg [4:0] shift;
+    reg [3:0] shift;
 
     always @ (posedge clk or negedge rst_n)
         if (! rst_n)
-            shift <= 5'b0;
+            shift <= 4'b0;
         else if (arg_vld_q)
-            shift <= 5'b10000;
+            shift <= 4'b1000;
         else
             shift <= shift >> 1;
 
     assign res_vld = shift [0];
 
-    reg [w - 1:0] mul;
+    reg  [w - 1:0] mul_q;
+    wire [w - 1:0] mul_d = (arg_vld_q ? arg_q : mul_q) * arg_q;
+
+    // TODO: reduce switching
 
     always @(posedge clk)
-        if (arg_vld_q)
-            mul <= arg_q;
-        else
-            mul <= mul * arg_q;
+        if (arg_vld_q || shift [3:1] != 3'b0)
+            mul_q <= mul_d;
 
-    assign res = mul;
+    assign res = mul_q;
 
 endmodule
