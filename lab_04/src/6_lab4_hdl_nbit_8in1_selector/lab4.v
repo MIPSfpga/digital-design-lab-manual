@@ -35,7 +35,9 @@ module lab4
     output  [ 9:0]  LEDR
 );
 
-	bn_select_8_1_case #(2) bn_select_8_1_case (.d0(KEY[1:0]), .d1(KEY[1:0]), .d2(KEY[1:0]), 
-	                                            .d3(KEY[1:0]), .d4(KEY[1:0]), .d5(KEY[1:0]), 
-												.d6(KEY[1:0]), .d7(KEY[1:0]), .sel(SW[7:0]), .y(LEDR[1:0]));
+	bn_select_8_1_case #(3) bn_select_8_1_case (.d0(SW[2:0]), .d1(SW[3:1]), .d2(SW[4:2]), 
+	                                            .d3(SW[5:3]), .d4(SW[6:4]), .d5(SW[7:5]), 
+												.d6(SW[8:6]), .d7(SW[9:7]), .sel(SW[7:0]), .y(LEDR[2:0]));
+	// if SW[7:0] == 8'b0_0000001..8'b0_1000000 LEDR[2:0] always will be 3'b001, SW[9:8] does not affect
+	// if SW[7:0] == 8'b1_0000000 LEDR[0] = 1'b1, LEDR[2:1] = SW[9:8]. 
 endmodule
