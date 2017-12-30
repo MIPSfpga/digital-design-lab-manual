@@ -11,7 +11,7 @@ vlog ../simple_counter_tb.v
 set top=simple_counter_tb
 # open the testbench module for simulation
 
-vsim work.simple_counter_tb
+vsim -novopt work.simple_counter_tb
 
 # add all testbench signals to time diagram
 

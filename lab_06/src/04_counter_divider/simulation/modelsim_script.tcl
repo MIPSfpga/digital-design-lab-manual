@@ -10,7 +10,7 @@ vlog ../cnt_div_tb.v
 
 # open the testbench module for simulation
 
-vsim work.cnt_div_tb
+vsim -novopt work.cnt_div_tb
 
 # add all testbench signals to time diagram
 

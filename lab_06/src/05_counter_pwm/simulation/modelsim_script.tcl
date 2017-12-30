@@ -11,7 +11,7 @@ vlog ../pwm_tb.v
 set top=pwm_tb
 # open the testbench module for simulation
 
-vsim work.pwm_tb
+vsim -novopt work.pwm_tb
 
 # add all testbench signals to time diagram
 

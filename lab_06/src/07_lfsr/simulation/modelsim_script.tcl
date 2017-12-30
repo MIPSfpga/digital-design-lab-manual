@@ -11,7 +11,7 @@ vlog ../shift_reg_tb.v
 set top=shift_reg_tb
 # open the testbench module for simulation
 
-vsim work.shift_reg_tb
+vsim -novopt work.shift_reg_tb
 
 # add all testbench signals to time diagram
 
