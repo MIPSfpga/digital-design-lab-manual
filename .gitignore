@@ -1,4 +1,5 @@
 project/
 sim/
+syn/
 *.bak
 a.out
